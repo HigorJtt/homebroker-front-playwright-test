@@ -1,0 +1,40 @@
+import { Page, Locator } from '@playwright/test'
+import { expect } from '@playwright/test'
+
+import { Login } from '@/src/components/navigation/login/login.navigation'
+
+export class MinhaConta {
+    readonly page: Page
+    readonly menuMinhaConta: Locator
+    readonly secaoSaques: Locator
+    readonly secaoPerfil: Locator
+    readonly secaoConfiguracoes: Locator
+    readonly secaoVisaoGeral: Locator
+
+    constructor(page: Page) {
+        this.page = page
+        this.menuMinhaConta = this.page.getByText('Minha conta')
+        this.secaoSaques = this.page.getByText('Saques')
+        this.secaoPerfil = this.page.getByText('Perfil')
+        this.secaoConfiguracoes = this.page.getByText('Configurações')
+        this.secaoVisaoGeral = this.page.getByText('Visão Geral')
+    }
+
+    private async assertVisible(...items: Array<string | Locator>) {
+        for (const item of items) {
+            const locator = typeof item === 'string' ? this.page.getByText(item, { exact: true }) : item
+            await expect(locator).toBeVisible()
+        }
+    }
+
+    async minhaContaNavigation(email: string, senha: string) {
+        const login = new Login(this.page)
+        await login.navigationLogin(email, senha)
+
+        await this.menuMinhaConta.click()
+        await this.page.waitForTimeout(5000)
+
+        await this.assertVisible(this.secaoSaques, this.secaoPerfil, this.secaoConfiguracoes, this.secaoVisaoGeral)
+        return this
+    }
+}
