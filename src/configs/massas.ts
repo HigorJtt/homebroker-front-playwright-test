@@ -6,7 +6,7 @@ export const usarioNumeroTelefoneExistente = {
 
 export const usarioLoginCorreto = {
     email: 'brenogrammeudo-5454@yopmail.com',
-    senha: 'senha@123',
+    senha: 'senha@123'
 }
 
 export const usarioFirstDeposit = {
