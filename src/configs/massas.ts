@@ -1,3 +1,9 @@
+export const usarioNumeroTelefoneExistente = {
+    email: 'higordagg@yopmail.com',
+    senha: 'senha@123',
+    telefone: '61999456435'
+}
+
 export const usarioLoginCorreto = {
     email: 'brenogrammeudo-5454@yopmail.com',
     senha: 'senha@123'
