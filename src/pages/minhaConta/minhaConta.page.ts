@@ -13,7 +13,6 @@ export class MinhaContaPage {
     async abrirMinhaConta(email: string, senha: string) {
         const minhaConta = new MinhaConta(this.page)
         await minhaConta.minhaContaNavigation(email, senha)
-        return this
     }
 
     private async assertVisible(...items: Array<string | Locator>) {
@@ -24,7 +23,6 @@ export class MinhaContaPage {
     }
 
     async validarMinhaConta(email: string, senha: string) {
-
         await this.abrirMinhaConta(email, senha)
 
         const secoes = [
@@ -68,6 +66,5 @@ export class MinhaContaPage {
                 await this.assertVisible(texto)
             }
         }
-        return this
     }
 }

@@ -41,7 +41,6 @@ export class ConfiguracoesPage {
     async abrirConfiguracoes(email: string, senha: string) {
         const navigation = new Configuracoes(this.page)
         await navigation.ConfiguracoesNavigation(email, senha)
-        return this
     }
 
     private escapeRegex(str: string) {
@@ -58,7 +57,12 @@ export class ConfiguracoesPage {
     async validarConfiguracoes(email: string, senha: string) {
         await this.abrirConfiguracoes(email, senha)
 
-        await this.assertVisible(this.header, this.preferenciaTexto, this.segurancaTexto, this.legalTexto)
+        await this.assertVisible(
+            this.header,
+            this.preferenciaTexto,
+            this.segurancaTexto,
+            this.legalTexto
+        )
 
         const opcoesConfiguracao = [
             {

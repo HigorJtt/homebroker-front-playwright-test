@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
-    "scripts": {},
+    "scripts": {
+        "test": "npx playwright test --ui"
+    },
     "repository": {
         "type": "git",
         "url": "https://github.com/HigorJtt/homebroker-web-front-playwright-test.git"

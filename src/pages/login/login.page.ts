@@ -32,13 +32,12 @@ export class LoginPage {
         this.exemploParagrafo = this.page.getByText(/HomeBroker não está autorizada pela Comissão de Valores Mobiliários/i)
     }
 
-    async abrir(url?: string) {
+    async abrirLogin(url?: string) {
         const target = url ?? 'https://homebroker-hml.homebroker.com/pt/sign-in'
         await this.page.goto(target)
         await expect(this.page).toHaveTitle('Home Broker')
     }
 
-    // helper para validar múltiplos locators/strings
     private async assertVisible(...items: Array<string | Locator>) {
         for (const item of items) {
             const locator = typeof item === 'string' ? this.page.getByText(item, { exact: true }) : item
@@ -47,8 +46,7 @@ export class LoginPage {
     }
 
     async validarLoginHomebroker() {
-
-        await this.abrir()
+        await this.abrirLogin()
 
         await this.assertVisible(this.titulo, this.descricao)
         await expect(this.page.getByText('E-mail').first()).toBeVisible()
@@ -59,16 +57,22 @@ export class LoginPage {
             expect(this.password).toHaveAttribute('placeholder', 'Digite sua senha')
         ])
 
-        await this.assertVisible(this.loginBotao, this.googleBotao, this.forgotPassword, this.criarContaLink,
-            this.confirmarIdadeTexto, this.termosLink, this.exemptionTitle, this.exemploParagrafo)
+        await this.assertVisible(
+            this.loginBotao,
+            this.googleBotao,
+            this.forgotPassword,
+            this.criarContaLink,
+            this.confirmarIdadeTexto,
+            this.termosLink,
+            this.exemptionTitle,
+            this.exemploParagrafo
+        )
     }
 
     async validarMensagemInformativaEmailSenha() {
-
-        await this.abrir()
+        await this.abrirLogin()
 
         await this.loginBotao.click()
         await this.assertVisible('Digite seu e-mail', 'A senha é obrigatória')
-        return this
     }
 }
