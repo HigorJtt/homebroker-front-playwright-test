@@ -1,10 +1,13 @@
 import { expect } from '@playwright/test'
 import { Page, Locator } from 'playwright'
 
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
+import { Login } from '@/src/components/navigation/login/login.navigation'
+
 export class LoginPage {
     readonly page: Page
     readonly email: Locator
-    readonly password: Locator
+    readonly senha: Locator
     readonly forgotPassword: Locator
     readonly titulo: Locator
     readonly descricao: Locator
@@ -19,7 +22,7 @@ export class LoginPage {
     constructor(page: Page) {
         this.page = page
         this.email = this.page.locator('input[type="email"], input[name="email"]')
-        this.password = this.page.locator('input[type="password"], input[name="password"]')
+        this.senha = this.page.locator('input[type="password"], input[name="password"]')
         this.forgotPassword = this.page.getByText('Esqueci minha senha')
         this.titulo = this.page.getByText('Iniciar sessão')
         this.descricao = this.page.getByText('Insira login e senha para acessar sua conta')
@@ -32,8 +35,12 @@ export class LoginPage {
         this.exemploParagrafo = this.page.getByText(/HomeBroker não está autorizada pela Comissão de Valores Mobiliários/i)
     }
 
-    async abrirLogin(url?: string) {
+    async abrirLogin(creds?: CredenciaisLogin, url?: string) {
         const target = url ?? 'https://homebroker-hml.homebroker.com/pt/sign-in'
+        const login = new Login(this.page)
+        if (creds) {
+            await login.navigationLogin(creds)
+        }
         await this.page.goto(target)
         await expect(this.page).toHaveTitle('Home Broker')
     }
@@ -46,7 +53,6 @@ export class LoginPage {
     }
 
     async validarLoginHomebroker() {
-        await this.abrirLogin()
 
         await this.assertVisible(this.titulo, this.descricao)
         await expect(this.page.getByText('E-mail').first()).toBeVisible()
@@ -54,7 +60,7 @@ export class LoginPage {
 
         await Promise.all([
             expect(this.email).toHaveAttribute('placeholder', 'Digite seu e-mail'),
-            expect(this.password).toHaveAttribute('placeholder', 'Digite sua senha')
+            expect(this.senha).toHaveAttribute('placeholder', 'Digite sua senha')
         ])
 
         await this.assertVisible(
@@ -74,5 +80,14 @@ export class LoginPage {
 
         await this.loginBotao.click()
         await this.assertVisible('Digite seu e-mail', 'A senha é obrigatória')
+    }
+
+    async validarMensagemInformativaSenhaIncorreta(creds: CredenciaisLogin) {
+        await this.abrirLogin(creds)
+
+        await this.email.fill(creds.email)
+        await this.senha.fill(creds.senha)
+        await this.loginBotao.click()
+        await this.assertVisible('Email e/ou senha incorreto')
     }
 }
