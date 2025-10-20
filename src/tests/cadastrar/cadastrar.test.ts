@@ -1,7 +1,7 @@
 import test from '@playwright/test'
 
 import { CadastrarPage } from '@/src/pages/cadastrar/cadastrar.page'
-import { usarioNumeroTelefoneExistente } from '@/src/configs/massas'
+import { usuarioNumeroTelefoneExistente } from '@/src/configs/massas'
 
 test.describe('Cadastrar', () => {
 
@@ -20,6 +20,6 @@ test.describe('Cadastrar', () => {
     test('Validar mensagem informativa de número de telefone já existente', async ({ page }) => {
 
         const cadastrarPage = new CadastrarPage(page)
-        await cadastrarPage.validarMensagemInformativaTelefoneExistente(usarioNumeroTelefoneExistente.email, usarioNumeroTelefoneExistente.senha, usarioNumeroTelefoneExistente.telefone)
+        await cadastrarPage.validarMensagemInformativaTelefoneExistente(usuarioNumeroTelefoneExistente)
     })
 })

@@ -1,6 +1,8 @@
 import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
+
 export class CadastrarPage {
     readonly page: Page
     readonly cadastreseBotao: Locator
@@ -78,13 +80,13 @@ export class CadastrarPage {
         await this.assertVisible('Digite seu e-mail', 'Pelo menos 8 caracteres', 'Você precisa inserir seu número de telefone')
     }
 
-    async validarMensagemInformativaTelefoneExistente(email: string, senha: string, numero: string) {
+    async validarMensagemInformativaTelefoneExistente(creds: CredenciaisLogin) {
         await this.abrirCadastrar()
 
         await this.cadastrarBotao.click()
-        await this.email.fill(email)
-        await this.password.fill(senha)
-        await this.telefoneInput.fill(numero)
+        await this.email.fill(creds.email)
+        await this.password.fill(creds.senha)
+        await this.telefoneInput.fill(creds.numero)
 
         await this.cadastrarBotao.click()
         await this.assertVisible('O número de telefone 61999456435 já está existes')

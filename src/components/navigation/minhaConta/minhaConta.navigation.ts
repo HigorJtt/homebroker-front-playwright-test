@@ -27,14 +27,18 @@ export class MinhaConta {
         }
     }
 
-    async minhaContaNavigation(email: string, senha: string) {
+    async minhaContaNavigation(creds: { email: string, senha: string }) {
         const login = new Login(this.page)
-        await login.navigationLogin(email, senha)
+        await login.navigationLogin(creds)
 
         await this.menuMinhaConta.click()
         await this.page.waitForTimeout(5000)
 
-        await this.assertVisible(this.secaoSaques, this.secaoPerfil, this.secaoConfiguracoes, this.secaoVisaoGeral)
-        return this
+        await this.assertVisible(
+            this.secaoSaques,
+            this.secaoPerfil,
+            this.secaoConfiguracoes,
+            this.secaoVisaoGeral
+        )
     }
 }
