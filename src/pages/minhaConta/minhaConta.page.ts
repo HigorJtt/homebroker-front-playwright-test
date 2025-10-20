@@ -1,7 +1,7 @@
-import { expect } from '@playwright/test'
-import { Page, Locator } from 'playwright'
+import { expect, Page, Locator } from '@playwright/test'
 
 import { MinhaConta } from '@/src/components/navigation/minhaConta/minhaConta.navigation'
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class MinhaContaPage {
     readonly page: Page
@@ -10,9 +10,9 @@ export class MinhaContaPage {
         this.page = page
     }
 
-    async abrirMinhaConta(email: string, senha: string) {
+    async abrirMinhaConta(creds: CredenciaisLogin) {
         const minhaConta = new MinhaConta(this.page)
-        await minhaConta.minhaContaNavigation(email, senha)
+        await minhaConta.minhaContaNavigation(creds)
     }
 
     private async assertVisible(...items: Array<string | Locator>) {
@@ -22,8 +22,8 @@ export class MinhaContaPage {
         }
     }
 
-    async validarMinhaConta(email: string, senha: string) {
-        await this.abrirMinhaConta(email, senha)
+    async validarMinhaConta(creds: CredenciaisLogin) {
+        await this.abrirMinhaConta(creds)
 
         const secoes = [
             {

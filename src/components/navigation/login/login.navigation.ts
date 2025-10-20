@@ -1,6 +1,8 @@
 import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
+
 export class Login {
     readonly page: Page
     readonly emailInput: Locator
@@ -23,14 +25,13 @@ export class Login {
     async abrir() {
         await this.page.goto('https://homebroker-hml.homebroker.com/pt/sign-in')
         await expect(this.page).toHaveTitle('Home Broker')
-        return this
     }
 
-    async navigationLogin(email: string, senha: string) {
+    async navigationLogin(creds: CredenciaisLogin) {
         await this.abrir()
 
-        await this.emailInput.fill(email)
-        await this.passwordInput.fill(senha)
+        await this.emailInput.fill(creds.email)
+        await this.passwordInput.fill(creds.senha)
 
         await this.loginButton.click()
 
@@ -40,6 +41,5 @@ export class Login {
         }
 
         await this.page.waitForURL('**/pt/invest', { timeout: 10000 })
-        return this
     }
 }

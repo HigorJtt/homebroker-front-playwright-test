@@ -2,6 +2,7 @@ import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 import { MinhaConta } from '@/src/components/navigation/minhaConta/minhaConta.navigation'
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class Configuracoes {
     readonly page: Page
@@ -19,14 +20,13 @@ export class Configuracoes {
         }
     }
 
-    async ConfiguracoesNavigation(email: string, senha: string) {
+    async configuracoesNavigation(creds: CredenciaisLogin) {
         const minhaConta = new MinhaConta(this.page)
-        await minhaConta.minhaContaNavigation(email, senha)
+        await minhaConta.minhaContaNavigation(creds)
 
         await this.header.click()
         await this.page.waitForTimeout(5000)
 
         await this.assertVisible(this.header)
-        return this
     }
 }

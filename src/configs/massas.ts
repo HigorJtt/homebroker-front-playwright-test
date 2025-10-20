@@ -1,45 +1,47 @@
-export const usarioNumeroTelefoneExistente = {
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
+
+export const usuarioNumeroTelefoneExistente: CredenciaisLogin = {
     email: 'higordagg@yopmail.com',
     senha: 'senha@123',
-    telefone: '61999456435'
+    numero: '61999456435'
 }
 
-export const usarioLoginCorreto = {
+export const usuarioLoginCorreto: CredenciaisLogin = {
     email: 'brenogrammeudo-5454@yopmail.com',
     senha: 'senha@123'
 }
 
-export const usarioFirstDeposit = {
+export const usuarioFirstDeposit: CredenciaisLogin = {
     email: 'higorvhjyg@gmail.com',
     senha: '460.866.970-27'
 }
 
-export const usarioPerfil = {
+export const usuarioPerfil: CredenciaisLogin = {
     email: 'higor-6553@gmail.com',
     senha: 'senha@123'
 }
 
-export const usarioCryptomoedas = {
+export const usuarioCryptomoedas: CredenciaisLogin = {
     email: 'higorapp@gmail.com',
     senha: 'senha@123'
 }
 
-export const usarioInfluencer = {
+export const usuarioInfluencer: CredenciaisLogin = {
     email: 'ingrid.bsousa100@yopmail.com',
     senha: 'senha@123'
 }
 
-export const usarioChile = {
+export const usuarioChile: CredenciaisLogin = {
     email: 'higorchile123@gmail.com',
     senha: 'senha@123'
 }
 
-export const usarioMexico = {
+export const usuarioMexico: CredenciaisLogin = {
     email: 'zetavares.rib+mexico@gmail.com',
     senha: 'Hb223640'
 }
 
-export const usarioColombia = {
+export const usuarioColombia: CredenciaisLogin = {
     email: 'higtobh@yahoo.com',
     senha: 'senha@123'
 }

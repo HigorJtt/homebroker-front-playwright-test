@@ -1,7 +1,7 @@
-import { Page, Locator } from 'playwright'
-import { expect } from '@playwright/test'
+import { Page, Locator, expect } from '@playwright/test'
 
 import { Configuracoes } from '@/src/components/navigation/configuracoes/configuracoes.navigation'
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class ConfiguracoesPage {
     readonly page: Page
@@ -38,9 +38,9 @@ export class ConfiguracoesPage {
         this.sonsHeading = this.page.getByRole('heading', { name: 'Sons do sistema' })
     }
 
-    async abrirConfiguracoes(email: string, senha: string) {
+    async abrirConfiguracoes(creds: CredenciaisLogin) {
         const navigation = new Configuracoes(this.page)
-        await navigation.ConfiguracoesNavigation(email, senha)
+        await navigation.configuracoesNavigation(creds)
     }
 
     private escapeRegex(str: string) {
@@ -54,8 +54,8 @@ export class ConfiguracoesPage {
         }
     }
 
-    async validarConfiguracoes(email: string, senha: string) {
-        await this.abrirConfiguracoes(email, senha)
+    async validarConfiguracoes(creds: CredenciaisLogin) {
+        await this.abrirConfiguracoes(creds)
 
         await this.assertVisible(
             this.header,
@@ -101,8 +101,8 @@ export class ConfiguracoesPage {
         }
     }
 
-    async validarIdioma(email: string, senha: string) {
-        await this.abrirConfiguracoes(email, senha)
+    async validarIdioma(creds: CredenciaisLogin) {
+        await this.abrirConfiguracoes(creds)
 
         await this.page.getByText('Alterar sua preferência de idioma').click()
 
@@ -134,8 +134,8 @@ export class ConfiguracoesPage {
         await expect(this.alert.filter({ hasText: 'Your language was saved.' })).toBeVisible({ timeout: 10000 })
     }
 
-    async validarProTrader(email: string, senha: string) {
-        await this.abrirConfiguracoes(email, senha)
+    async validarProTrader(creds: CredenciaisLogin) {
+        await this.abrirConfiguracoes(creds)
 
         await expect(this.proTraderTexto).toBeVisible()
 
@@ -155,8 +155,8 @@ export class ConfiguracoesPage {
         }
     }
 
-    async validaSons(email: string, senha: string) {
-        await this.abrirConfiguracoes(email, senha)
+    async validaSons(creds: CredenciaisLogin) {
+        await this.abrirConfiguracoes(creds)
 
         await this.sonsLink.click()
         await expect(this.sonsHeading).toBeVisible()
