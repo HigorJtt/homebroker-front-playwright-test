@@ -1,14 +1,27 @@
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
-export const usuarioNumeroTelefoneExistente: CredenciaisLogin = {
-    email: 'higordagg@yopmail.com',
-    senha: 'senha@123',
-    numero: '61999456435'
+export const usuariosCadastro: Record<string, CredenciaisLogin> = {
+    usuarioEmailExistente: {
+        email: 'brenogrammeudo-5454@yopmail.com',
+        senha: 'senha@123',
+        numero: '61999456436'
+    },
+    usuarioNumeroTelefoneExistente: {
+        email: 'higordagg@yopmail.com',
+        senha: 'senha@123',
+        numero: '61999456435'
+    }
 }
 
-export const usuarioLoginCorreto: CredenciaisLogin = {
-    email: 'brenogrammeudo-5454@yopmail.com',
-    senha: 'senha@123'
+export const usuariosLogin: Record<string, CredenciaisLogin> = {
+    login: {
+        email: 'brenogrammeudo-5454@yopmail.com',
+        senha: 'senha@123'
+    },
+    usuarioSenhaIncorreta: {
+        email: 'brenogrammeudo-5454@yopmail.com',
+        senha: 'senhateste'
+    }
 }
 
 export const usuarioFirstDeposit: CredenciaisLogin = {

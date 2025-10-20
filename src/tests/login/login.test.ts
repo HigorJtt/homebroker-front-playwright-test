@@ -1,6 +1,7 @@
 import test from '@playwright/test'
 
 import { LoginPage } from '@/src/pages/login/login.page'
+import { usuariosLogin } from '@/src/configs/massas'
 
 test.describe('Login', () => {
 
@@ -14,5 +15,11 @@ test.describe('Login', () => {
 
         const loginPage = new LoginPage(page)
         await loginPage.validarMensagemInformativaEmailSenha()
+    })
+
+    test('Validar mensagem informativa de senha incorreta', async ({ page }) => {
+
+        const loginPage = new LoginPage(page)
+        await loginPage.validarMensagemInformativaSenhaIncorreta(usuariosLogin.usuarioSenhaIncorreta)
     })
 })

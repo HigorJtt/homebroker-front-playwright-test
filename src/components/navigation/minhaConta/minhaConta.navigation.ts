@@ -2,6 +2,7 @@ import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 import { Login } from '@/src/components/navigation/login/login.navigation'
+import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class MinhaConta {
     readonly page: Page
@@ -27,7 +28,7 @@ export class MinhaConta {
         }
     }
 
-    async minhaContaNavigation(creds: { email: string, senha: string }) {
+    async minhaContaNavigation(creds: CredenciaisLogin) {
         const login = new Login(this.page)
         await login.navigationLogin(creds)
 
