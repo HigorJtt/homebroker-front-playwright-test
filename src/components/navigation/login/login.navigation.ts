@@ -34,6 +34,7 @@ export class Login {
         await this.passwordInput.fill(creds.senha)
 
         await this.loginButton.click()
+        await this.page.waitForTimeout(5000)
 
         if (await this.verificationHeading.isVisible()) {
             await this.verificationInput.fill('000001')
