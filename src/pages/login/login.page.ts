@@ -24,7 +24,7 @@ export class LoginPage {
         this.email = this.page.locator('input[type="email"], input[name="email"]')
         this.senha = this.page.locator('input[type="password"], input[name="password"]')
         this.forgotPassword = this.page.getByText('Esqueci minha senha')
-        this.titulo = this.page.getByText('Iniciar sessão')
+        this.titulo = this.page.getByText('Iniciar sessão').first()
         this.descricao = this.page.getByText('Insira login e senha para acessar sua conta')
         this.loginBotao = this.page.getByRole('button', { name: 'Iniciar sessão' })
         this.googleBotao = this.page.getByRole('button', { name: /Entrar com o Google/i })
@@ -43,6 +43,7 @@ export class LoginPage {
         }
         await this.page.goto(target)
         await expect(this.page).toHaveTitle('Home Broker')
+        await this.page.waitForTimeout(5000)
     }
 
     private async assertVisible(...items: Array<string | Locator>) {
@@ -53,10 +54,11 @@ export class LoginPage {
     }
 
     async validarLoginHomebroker() {
+        await this.abrirLogin()
 
-        await this.assertVisible(this.titulo, this.descricao)
         await expect(this.page.getByText('E-mail').first()).toBeVisible()
         await expect(this.page.getByText('Senha').first()).toBeVisible()
+        await this.assertVisible(this.titulo, this.descricao)
 
         await Promise.all([
             expect(this.email).toHaveAttribute('placeholder', 'Digite seu e-mail'),
@@ -83,7 +85,10 @@ export class LoginPage {
     }
 
     async validarMensagemInformativaSenhaIncorreta(creds: CredenciaisLogin) {
-        await this.abrirLogin(creds)
+        const target = 'https://homebroker-hml.homebroker.com/pt/sign-in'
+        await this.page.goto(target)
+        await expect(this.page).toHaveTitle('Home Broker')
+        await this.page.waitForTimeout(5000)
 
         await this.email.fill(creds.email)
         await this.senha.fill(creds.senha)
