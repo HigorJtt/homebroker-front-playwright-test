@@ -49,6 +49,7 @@ export class IdiomaPage {
         await expect(this.alert.filter({ hasText: 'Seu idioma foi alterado com sucesso.' })).toBeVisible({ timeout: 10000 })
         await this.assertVisible('Change language', 'English')
         await this.page.getByRole('button', { name: 'Save' }).click()
+        await this.page.waitForTimeout(3000)
         await this.page.getByRole('combobox', { name: 'Select your language' }).click()
 
         for (const idioma of idiomas) {

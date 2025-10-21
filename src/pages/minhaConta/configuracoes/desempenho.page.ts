@@ -41,6 +41,6 @@ export class DesempenhoPage {
         await expect(this.alert.filter({ hasText: 'Suas preferências de desempenho foram alteradas com sucesso.' })).toBeVisible({ timeout: 10000 })
         await this.page.waitForTimeout(2000)
         await this.page.getByText('Ativar modo desempenho:').click()
-        await expect(this.alert.filter({ hasText: 'Suas preferências de desempenho foram alteradas com sucesso.' })).toBeVisible({ timeout: 10000 })
+        await expect(this.page.getByRole('alert').filter({ hasText: 'Suas preferências de desempenho foram alteradas com sucesso.' }).locator('div').nth(1)).toBeVisible({ timeout: 10000 })
     }
 }
