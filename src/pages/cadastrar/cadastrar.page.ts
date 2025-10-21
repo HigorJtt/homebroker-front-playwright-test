@@ -2,11 +2,9 @@ import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
-import { Login } from '@/src/components/navigation/login/login.navigation'
 
 export class CadastrarPage {
     readonly page: Page
-    readonly cadastreseBotao: Locator
     readonly descricao: Locator
     readonly numeroTelefone: Locator
     readonly telefoneInput: Locator
@@ -24,7 +22,6 @@ export class CadastrarPage {
 
     constructor(page: Page) {
         this.page = page
-        this.cadastreseBotao = this.page.getByRole('button', { name: 'Cadastre-se' })
         this.descricao = this.page.getByText('Crie sua conta gratuita e comece a negociar')
         this.email = this.page.locator('input[type="email"], input[name="email"]')
         this.senha = this.page.locator('input[type="password"], input[name="password"]')
@@ -39,14 +36,11 @@ export class CadastrarPage {
         this.exemploParagrafo = this.page.getByText(/HomeBroker não está autorizada pela Comissão de Valores Mobiliários/i)
     }
 
-    async abrirCadastrar(creds?: CredenciaisLogin) {
-        const login = new Login(this.page)
-
-        await this.page.goto('https://homebroker-hml.homebroker.com/pt/sign-in')
-        await expect(this.page).toHaveTitle('Home Broker')
-        await login.navigationLogin(creds)
-        await this.cadastreseBotao.click()
+    async abrirCadastrar() {
+        await this.page.goto('https://homebroker-hml.homebroker.com/pt/register')
+        await expect(this.page.getByText('Cadastrar').first()).toBeVisible()
         await this.page.waitForTimeout(5000)
+
     }
 
     private async assertVisible(...items: Array<string | Locator>) {
@@ -59,7 +53,6 @@ export class CadastrarPage {
     async validarCadastrar() {
         await this.abrirCadastrar()
 
-        await expect(this.page.getByText('Cadastrar').first()).toBeVisible()
         await expect(this.page.getByText('E-mail').first()).toBeVisible()
         await expect(this.page.getByText('Senha').first()).toBeVisible()
 
@@ -94,15 +87,16 @@ export class CadastrarPage {
         await this.senha.fill(creds.senha)
         await this.telefoneInput.fill(creds.numero)
         await this.cadastrarBotao.click()
-        await this.assertVisible('O número de telefone 61999456435 já está existe')
+        await expect(this.page.getByText('O número de telefone 5561999456435 já existe').first()).toBeVisible()
     }
 
     async validarMensagemInformativaSenhaIncorreta(creds: CredenciaisLogin) {
-        await this.abrirCadastrar(creds)
+        await this.abrirCadastrar()
 
         await this.email.fill(creds.email)
         await this.senha.fill(creds.senha)
+        await this.telefoneInput.fill(creds.numero)
         await this.cadastrarBotao.click()
-        await this.assertVisible('Email e/ou senha incorreto')
+        await this.assertVisible('Já existe uma conta com o e-mail fornecido.')
     }
 }
