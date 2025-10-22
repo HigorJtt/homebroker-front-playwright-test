@@ -23,8 +23,8 @@ export class CadastrarPage {
     constructor(page: Page) {
         this.page = page
         this.descricao = this.page.getByText('Crie sua conta gratuita e comece a negociar')
-        this.email = this.page.locator('input[type="email"], input[name="email"]')
-        this.senha = this.page.locator('input[type="password"], input[name="password"]')
+        this.email = this.page.locator('input[type="email"]')
+        this.senha = this.page.locator('input[type="password"]')
         this.numeroTelefone = this.page.getByText('Número de telefone')
         this.telefoneInput = this.page.locator('input[type="tel"]')
         this.pais = this.page.getByText('País')

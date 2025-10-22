@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test'
 
-import { Configuracoes } from '@/src/components/navigation/configuracoes/configuracoes.navigation'
+import { Configuracoes } from '@/src/components/navigation/configuracoes/configuracoes'
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class AlterarSenhaPage {

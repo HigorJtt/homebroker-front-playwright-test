@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test'
 import { expect } from '@playwright/test'
 
-import { Login } from '@/src/components/navigation/login/login.navigation'
+import { Login } from '@/src/components/navigation/login/login'
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class MinhaConta {

@@ -1,6 +1,6 @@
 import test from '@playwright/test'
 
-import { LoginPage } from '@/src/pages/login/login.page'
+import { LoginPage } from '@/src/pages/login/login'
 import { usuariosLogin } from '@/src/configs/massas'
 
 test.describe('Login', () => {
