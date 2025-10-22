@@ -1,12 +1,12 @@
 import test from '@playwright/test'
 
-import { ConfiguracoesPage } from '@/src/pages/minhaConta/configuracoes/configuracoes.page'
-import { IdiomaPage } from '@/src/pages/minhaConta/configuracoes/idioma.page'
-import { ProTraderPage } from '@/src/pages/minhaConta/configuracoes/protrader.page'
-import { SomPage } from '@/src/pages/minhaConta/configuracoes/som.page'
-import { DesempenhoPage } from '@/src/pages/minhaConta/configuracoes/desempenho.page'
-import { AlterarSenhaPage } from '@/src/pages/minhaConta/configuracoes/alterarSenha.page'
-import { AutenticacaoDoisFatoresPage } from '@/src/pages/minhaConta/configuracoes/autenticacaoDoisFatores.page'
+import { ConfiguracoesPage } from '@/src/pages/minhaConta/configuracoes/configuracoes'
+import { IdiomaPage } from '@/src/pages/minhaConta/configuracoes/idioma'
+import { ProTraderPage } from '@/src/pages/minhaConta/configuracoes/proTrader'
+import { SomPage } from '@/src/pages/minhaConta/configuracoes/som'
+import { DesempenhoPage } from '@/src/pages/minhaConta/configuracoes/desempenho'
+import { AlterarSenhaPage } from '@/src/pages/minhaConta/configuracoes/alterarSenha'
+import { AutenticacaoDoisFatoresPage } from '@/src/pages/minhaConta/configuracoes/autenticacaoDoisFatores'
 import { usuariosLogin } from '@/src/configs/massas'
 
 test.describe('Configurações', () => {

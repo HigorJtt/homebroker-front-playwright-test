@@ -2,7 +2,7 @@ import { expect } from '@playwright/test'
 import { Page, Locator } from 'playwright'
 
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
-import { Login } from '@/src/components/navigation/login/login.navigation'
+import { Login } from '@/src/components/navigation/login/login'
 
 export class LoginPage {
     readonly page: Page
@@ -21,8 +21,8 @@ export class LoginPage {
 
     constructor(page: Page) {
         this.page = page
-        this.email = this.page.locator('input[type="email"], input[name="email"]')
-        this.senha = this.page.locator('input[type="password"], input[name="password"]')
+        this.email = this.page.locator('input[type="email"]')
+        this.senha = this.page.locator('input[type="password"]')
         this.forgotPassword = this.page.getByText('Esqueci minha senha')
         this.titulo = this.page.getByText('Iniciar sessão').first()
         this.descricao = this.page.getByText('Insira login e senha para acessar sua conta')

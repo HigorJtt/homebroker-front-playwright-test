@@ -1,6 +1,6 @@
 import test from '@playwright/test'
 
-import { CadastrarPage } from '@/src/pages/cadastrar/cadastrar.page'
+import { CadastrarPage } from '@/src/pages/cadastrar/cadastrar'
 import { usuariosCadastro } from '@/src/configs/massas'
 
 test.describe('Cadastrar', () => {
