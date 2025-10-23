@@ -96,6 +96,6 @@ export class CadastrarPage {
         await this.senha.fill(creds.senha)
         await this.telefoneInput.fill(creds.numero)
         await this.cadastrarBotao.click()
-        await this.assertVisible('Já existe uma conta com o e-mail fornecido.')
+        await expect(this.page.getByText('Já existe uma conta com o e-mail fornecido.').first()).toBeVisible()
     }
 }

@@ -35,9 +35,11 @@ export class DepositoPage {
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
         this.titulo = this.page.getByText('Selecione o tipo de depósito')
         this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
+        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.tituloPix = this.page.getByText('Pix').first()
         this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
         this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
+        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.tituloCriptomoedas = this.page.getByText('Criptomoeda').first()
         this.valorMinimoCryptomoedas = this.page.getByText('Valor mínimo: 10 USDT')
         this.descriptionCriptomoedas = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
@@ -99,7 +101,7 @@ export class DepositoPage {
             this.codigoCupomTexto,
             this.loginBotao,
             this.termosCondicoesTexto,
-            this.transacaoProtegidaTexto,
+            this.transacaoProtegidaTexto
         )
 
         await expect(this.placeholderCodigoCupom).toHaveAttribute('placeholder', 'Digite o código do cupom')
@@ -137,7 +139,7 @@ export class DepositoPage {
 
         for (const { valor } of listaValores) {
 
-            const onlyDigits = valor.replace(/[^\d]/g, '');
+            const onlyDigits = valor.replace(/[^\d]/g, '')
             /* --- tolerância a separadores de milhar ---*/
             const intPattern = numberPatternFromDigits(onlyDigits)
             /* --- aceita opcionalmente a parte decimal com 2 casas (ponto ou vírgula) ---*/
@@ -154,8 +156,11 @@ export class DepositoPage {
 
         await this.page.getByRole('button', { name: 'Depósito R$40,000.00' }).click()
 
+        await Promise.all([
+            this.codigoPixTexto.waitFor({ timeout: 10000 })
+        ])
+
         await this.assertVisible(
-            this.codigoPixTexto,
             this.valor,
             this.descriptionCodigoPUX,
             this.botaoCopiarCodigoPix,
