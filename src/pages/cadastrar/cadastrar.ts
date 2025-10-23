@@ -1,5 +1,4 @@
-import { Page, Locator } from '@playwright/test'
-import { expect } from '@playwright/test'
+import { Page, Locator, expect } from '@playwright/test'
 
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
@@ -90,7 +89,7 @@ export class CadastrarPage {
         await expect(this.page.getByText('O número de telefone 5561999456435 já existe').first()).toBeVisible()
     }
 
-    async validarMensagemInformativaSenhaIncorreta(creds: CredenciaisLogin) {
+    async validarMensagemInformativaEmailExistente(creds: CredenciaisLogin) {
         await this.abrirCadastrar()
 
         await this.email.fill(creds.email)

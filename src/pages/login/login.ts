@@ -1,5 +1,4 @@
-import { expect } from '@playwright/test'
-import { Page, Locator } from 'playwright'
+import { Page, Locator, expect } from 'playwright/test'
 
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 import { Login } from '@/src/components/navigation/login/login'

@@ -11,7 +11,7 @@ test.describe('Login', () => {
         await loginPage.validarLoginHomebroker()
     })
 
-    test('Validar mensagem informativa de e-mail e senha obrigatórias', async ({ page }) => {
+    test('Validar mensagem informativa de E-mail e senha obrigatórias', async ({ page }) => {
 
         const loginPage = new LoginPage(page)
         await loginPage.validarMensagemInformativaEmailSenha()
