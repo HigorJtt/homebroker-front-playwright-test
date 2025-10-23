@@ -32,6 +32,7 @@ export class DepositoInfluencerPage {
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
         this.titulo = this.page.getByText('Selecione o tipo de depósito')
         this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
+        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.tituloPix = this.page.getByText('Pix').first()
         this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
         this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
@@ -90,7 +91,7 @@ export class DepositoInfluencerPage {
             this.codigoCupomTexto,
             this.loginBotao,
             this.termosCondicoesTexto,
-            this.transacaoProtegidaTexto,
+            this.transacaoProtegidaTexto
         )
 
         await expect(this.placeholderCodigoCupom).toHaveAttribute('placeholder', 'Digite o código do cupom')
@@ -128,7 +129,7 @@ export class DepositoInfluencerPage {
 
         for (const { valor } of listaValores) {
 
-            const onlyDigits = valor.replace(/[^\d]/g, '');
+            const onlyDigits = valor.replace(/[^\d]/g, '')
             /* --- tolerância a separadores de milhar ---*/
             const intPattern = numberPatternFromDigits(onlyDigits)
             /* --- aceita opcionalmente a parte decimal com 2 casas (ponto ou vírgula) ---*/
@@ -146,8 +147,11 @@ export class DepositoInfluencerPage {
         await this.page.getByRole('button', { name: 'R$60' }).click()
         await this.page.getByRole('button', { name: 'Depósito R$60.00' }).click()
 
+        await Promise.all([
+            this.codigoPixTexto.waitFor({ timeout: 10000 })
+        ])
+
         await this.assertVisible(
-            this.codigoPixTexto,
             this.valor,
             this.descriptionCodigoPUX,
             this.botaoCopiarCodigoPix,

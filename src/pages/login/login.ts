@@ -92,6 +92,6 @@ export class LoginPage {
         await this.email.fill(creds.email)
         await this.senha.fill(creds.senha)
         await this.loginBotao.click()
-        await this.assertVisible('Email e/ou senha incorreto')
+        await this.assertVisible('Usuario ou senha incorretos.')
     }
 }

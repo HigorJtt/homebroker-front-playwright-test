@@ -11,6 +11,7 @@ export class Login {
     readonly verificationHeading: Locator
     readonly verificationInput: Locator
     readonly verifyButton: Locator
+    readonly onboardingTitulo: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -20,6 +21,7 @@ export class Login {
         this.verificationHeading = this.page.getByRole('heading', { name: 'Digite o código de verificação' })
         this.verificationInput = this.page.locator('input')
         this.verifyButton = this.page.getByRole('button', { name: 'Verificar código' })
+        this.onboardingTitulo = this.page.getByText('Bem-vindo à HomeBroker')
     }
 
     async abrir() {
@@ -42,5 +44,9 @@ export class Login {
         }
 
         await this.page.waitForURL('**/pt/invest', { timeout: 10000 })
+
+        if (await this.onboardingTitulo.isVisible()) {
+            await this.page.getByTestId('CloseIcon').click()
+        }
     }
 }

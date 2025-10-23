@@ -50,8 +50,8 @@ export const usuarioChile: CredenciaisLogin = {
 }
 
 export const usuarioMexico: CredenciaisLogin = {
-    email: 'zetavares.rib+mexico@gmail.com',
-    senha: 'Hb223640'
+    email: 'higor-mm@gmail.com',
+    senha: 'senha@123'
 }
 
 export const usuarioColombia: CredenciaisLogin = {
