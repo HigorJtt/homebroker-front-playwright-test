@@ -11,21 +11,21 @@ test.describe('Cadastrar', () => {
         await loginPage.validarCadastrar()
     })
 
-    test('Validar mensagens informativas do E-mail, Senha e Número de telefone', async ({ page }) => {
+    test('Validar mensagens informativas do E-mail, senha e número de telefone', async ({ page }) => {
 
         const cadastrarPage = new CadastrarPage(page)
         await cadastrarPage.validarMensagensInformativas()
     })
 
-    test('Validar mensagem informativa de número de telefone já existente', async ({ page }) => {
+    test('Validar mensagem informativa de número de telefone existente', async ({ page }) => {
 
         const cadastrarPage = new CadastrarPage(page)
         await cadastrarPage.validarMensagemInformativaTelefoneExistente(usuariosCadastro.usuarioNumeroTelefoneExistente)
     })
 
-    test('Validar mensagem informativa de senha incorreta', async ({ page }) => {
+    test('Validar mensagem informativa de E-mail existente', async ({ page }) => {
 
         const cadastrarPage = new CadastrarPage(page)
-        await cadastrarPage.validarMensagemInformativaSenhaIncorreta(usuariosCadastro.usuarioEmailExistente)
+        await cadastrarPage.validarMensagemInformativaEmailExistente(usuariosCadastro.usuarioEmailExistente)
     })
 })
