@@ -6,6 +6,7 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class ConfiguracoesPage {
     readonly page: Page
     readonly header: Locator
+    readonly voltarBotao: Locator
     readonly preferenciaTexto: Locator
     readonly segurancaTexto: Locator
     readonly legalTexto: Locator
@@ -17,6 +18,7 @@ export class ConfiguracoesPage {
     constructor(page: Page) {
         this.page = page
         this.header = this.page.getByText('Configurações')
+        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
         this.preferenciaTexto = this.page.getByText('Preferência').first()
         this.segurancaTexto = this.page.getByText('Segurança')
         this.legalTexto = this.page.getByText('Legal')
@@ -49,7 +51,8 @@ export class ConfiguracoesPage {
             this.header,
             this.preferenciaTexto,
             this.segurancaTexto,
-            this.legalTexto
+            this.legalTexto,
+            this.voltarBotao
         )
 
         const opcoesConfiguracao = [

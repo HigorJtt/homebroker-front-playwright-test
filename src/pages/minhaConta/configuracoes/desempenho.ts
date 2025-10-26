@@ -6,6 +6,7 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class DesempenhoPage {
     readonly page: Page
     readonly header: Locator
+    readonly voltarBotao: Locator
     readonly preferenciaTexto: Locator
     readonly segurancaTexto: Locator
     readonly legalTexto: Locator
@@ -17,6 +18,7 @@ export class DesempenhoPage {
     constructor(page: Page) {
         this.page = page
         this.header = this.page.getByText('Configurações')
+        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
         this.preferenciaTexto = this.page.getByText('Preferência').first()
         this.segurancaTexto = this.page.getByText('Segurança')
         this.legalTexto = this.page.getByText('Legal')

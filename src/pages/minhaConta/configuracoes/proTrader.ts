@@ -5,6 +5,7 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class ProTraderPage {
     readonly page: Page
+    readonly voltarBotao: Locator
     readonly proTraderTexto: Locator
     readonly proTraderImg: Locator
     readonly proTraderBotao: Locator
@@ -13,6 +14,7 @@ export class ProTraderPage {
     constructor(page: Page) {
         this.page = page
         this.proTraderTexto = this.page.getByText('ProTrader').first()
+        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
         this.proTraderImg = this.page.getByRole('img', { name: 'ProTrader', exact: true })
         this.proTraderBotao = this.page.getByRole('button', { name: 'ProTrader' })
         this.proTraderCheckbox = this.page.getByLabel('controlled')
@@ -33,6 +35,7 @@ export class ProTraderPage {
     async validarProTrader(creds: CredenciaisLogin) {
         await this.abrirProTrader(creds)
 
+        await this.assertVisible(this.voltarBotao)
         await expect(this.proTraderTexto).toBeVisible()
         await this.page.getByText('Ativar ou desativar o ProTrader').click()
         await expect(this.proTraderImg).toBeVisible()

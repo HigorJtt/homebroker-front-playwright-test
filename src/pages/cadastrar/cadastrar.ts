@@ -36,7 +36,7 @@ export class CadastrarPage {
     }
 
     async abrirCadastrar() {
-        await this.page.goto('https://homebroker-hml.homebroker.com/pt/register')
+        await this.page.goto('/pt/register')
         await expect(this.page.getByText('Cadastrar').first()).toBeVisible()
         await this.page.waitForTimeout(5000)
 
