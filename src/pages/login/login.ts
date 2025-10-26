@@ -35,7 +35,7 @@ export class LoginPage {
     }
 
     async abrirLogin(creds?: CredenciaisLogin, url?: string) {
-        const target = url ?? 'https://homebroker-hml.homebroker.com/pt/sign-in'
+        const target = url ?? '/pt/sign-in'
         const login = new Login(this.page)
         if (creds) {
             await login.navigationLogin(creds)

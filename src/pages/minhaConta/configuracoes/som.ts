@@ -5,6 +5,7 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class SomPage {
     readonly page: Page
+    readonly voltarBotao: Locator
     readonly sonsLink: Locator
     readonly sonsHeading: Locator
     readonly alert: Locator
@@ -12,6 +13,7 @@ export class SomPage {
     constructor(page: Page) {
         this.page = page
         this.alert = this.page.getByRole('alert')
+        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
         this.sonsLink = this.page.getByRole('link', { name: 'Som Sons do sistema' })
         this.sonsHeading = this.page.getByRole('heading', { name: 'Sons do sistema' })
     }
@@ -21,9 +23,17 @@ export class SomPage {
         await navigation.configuracoesNavigation(creds)
     }
 
+    private async assertVisible(...items: Array<string | Locator>) {
+        for (const item of items) {
+            const locator = typeof item === 'string' ? this.page.getByText(item, { exact: true }) : item
+            await expect(locator).toBeVisible()
+        }
+    }
+
     async validarSom(creds: CredenciaisLogin) {
         await this.abrirSom(creds)
 
+        await this.assertVisible(this.voltarBotao)
         await this.sonsLink.click()
         await expect(this.sonsHeading).toBeVisible()
         await this.page.getByText('Ativar sons do sistema:').click()

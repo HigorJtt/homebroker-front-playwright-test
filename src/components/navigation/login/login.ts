@@ -25,8 +25,8 @@ export class Login {
     }
 
     async abrir() {
-        await this.page.goto('https://homebroker-hml.homebroker.com/pt/sign-in')
-        await expect(this.page).toHaveTitle('Home Broker')
+        await this.page.goto('/pt/sign-in')
+        await expect(this.page).toHaveURL('/pt/sign-in')
     }
 
     async navigationLogin(creds: CredenciaisLogin) {
