@@ -7,9 +7,11 @@ export class DepositoPage {
     readonly page: Page
     readonly titulo: Locator
     readonly descricao: Locator
+    readonly imgPix: Locator
     readonly tituloPix: Locator
     readonly valorMinimoPix: Locator
     readonly descricaoPix: Locator
+    readonly imgCriptomoedas: Locator
     readonly tituloCriptomoedas: Locator
     readonly valorMinimoCryptomoedas: Locator
     readonly descriptionCriptomoedas: Locator
@@ -19,7 +21,7 @@ export class DepositoPage {
     readonly inserirCodigoTexto: Locator
     readonly codigoCupomTexto: Locator
     readonly placeholderCodigoCupom: Locator
-    readonly loginBotao: Locator
+    readonly aplicarBotao: Locator
     readonly termosCondicoesTexto: Locator
     readonly transacaoProtegidaTexto: Locator
     readonly codigoPixTexto: Locator
@@ -36,10 +38,12 @@ export class DepositoPage {
         this.titulo = this.page.getByText('Selecione o tipo de depósito')
         this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
+        this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
         this.tituloPix = this.page.getByText('Pix').first()
         this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
         this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
+        this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         this.tituloCriptomoedas = this.page.getByText('Criptomoeda').first()
         this.valorMinimoCryptomoedas = this.page.getByText('Valor mínimo: 10 USDT')
         this.descriptionCriptomoedas = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
@@ -51,7 +55,7 @@ export class DepositoPage {
         this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
-        this.loginBotao = this.page.getByRole('button', { name: 'Aplicar' })
+        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
         this.termosCondicoesTexto = this.page.getByText('Depósitos por pix são processados em poucos minutos. Ao continuar, concordo com os ')
         /*--- Mapeamento da tela de "QR Code" ---*/
         this.codigoPixTexto = this.page.getByText('Seu código pix')
@@ -81,9 +85,11 @@ export class DepositoPage {
         await this.assertVisible(
             this.titulo,
             this.descricao,
+            this.imgPix,
             this.tituloPix,
             this.valorMinimoPix,
             this.descricaoPix,
+            this.imgCriptomoedas,
             this.tituloCriptomoedas,
             this.valorMinimoCryptomoedas,
             this.descriptionCriptomoedas,
@@ -96,15 +102,17 @@ export class DepositoPage {
 
         await this.assertVisible(
             this.escolhaValorTitulo,
+            this.imgPix,
             this.escolhaValorDescricao,
             this.inserirCodigoTexto,
             this.codigoCupomTexto,
-            this.loginBotao,
+            this.placeholderCodigoCupom,
+            this.aplicarBotao,
             this.termosCondicoesTexto,
-            this.transacaoProtegidaTexto
+            this.transacaoProtegidaTexto,
         )
 
-        await expect(this.placeholderCodigoCupom).toHaveAttribute('placeholder', 'Digite o código do cupom')
+        await expect(this.page.getByText('Valor mínimo: R$60', { exact: true })).toBeVisible()
 
         const listaValores = [
             {
@@ -165,9 +173,47 @@ export class DepositoPage {
             this.descriptionCodigoPUX,
             this.botaoCopiarCodigoPix,
             this.botaoVoltarInvestir,
-            this.transacaoProtegidaTexto
+            this.transacaoProtegidaTexto,
+            this.imgQRCode
         )
 
-        await expect(this.imgQRCode).toBeVisible({ timeout: 10000 })
+        const listaStepsPagamentos = [
+            {
+                step: '1.',
+                name: 'Acesse seu internet banking'
+            },
+            {
+                step: '2.',
+                name: 'Opte por pagar via PIX.'
+            },
+            {
+                step: '3.',
+                name: 'Copie e cole o código ou digitalize-o.'
+            },
+            {
+                step: '4.',
+                name: 'Este código PIX é válido por 24 horas'
+            }
+        ]
+
+        function escapeForRegex(str: string) {
+            return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s+')
+        }
+
+        for (const { step, name } of listaStepsPagamentos) {
+            // buscar o step apenas quando ele aparecer no início do texto (ex.: "1." no começo)
+            const escapedStep = step.replace(/\./g, '\\.')
+            const stepRegex = new RegExp(`^\\s*${escapedStep}`)
+            const stepLocator = this.page.getByText(stepRegex)
+
+            // criar regex tolerante para o texto do passo (escapa caracteres especiais e aceita variações de espaço/pontuação)
+            const nameRegex = new RegExp(escapeForRegex(name), 'i')
+            const nameLocator = this.page.getByText(nameRegex)
+
+            await this.assertVisible(
+                stepLocator,
+                nameLocator
+            )
+        }
     }
 }

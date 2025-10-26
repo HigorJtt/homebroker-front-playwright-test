@@ -3,27 +3,33 @@ import { Page, Locator, expect } from '@playwright/test'
 import { Deposito } from '@/src/components/navigation/deposito/deposito'
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
-export class DepositoInfluencerPage {
+export class DepositoKhipuPage {
     readonly page: Page
     readonly titulo: Locator
     readonly descricao: Locator
-    readonly imgPix: Locator
-    readonly tituloPix: Locator
-    readonly valorMinimoPix: Locator
-    readonly descricaoPix: Locator
-    readonly descricaoImportante: Locator
+    readonly imgCriptomoedas: Locator
+    readonly tituloCriptomoeda: Locator
+    readonly valorMinimoCriptomoeda: Locator
+    readonly descricaoCriptomoeda: Locator
+    readonly imgKhipu: Locator
+    readonly tituloKhipu: Locator
+    readonly valorMinimoKhipu: Locator
+    readonly descricaoKhipu: Locator
     readonly escolhaValorTitulo: Locator
     readonly escolhaValorDescricao: Locator
+    readonly valorMinimoKhipuEscolhaValor: Locator
     readonly inserirCodigoTexto: Locator
     readonly codigoCupomTexto: Locator
     readonly placeholderCodigoCupom: Locator
+    readonly redirecionamentoTexto: Locator
     readonly aplicarBotao: Locator
     readonly termosCondicoesTexto: Locator
+    readonly descricaoImportante: Locator
     readonly transacaoProtegidaTexto: Locator
-    readonly codigoPixTexto: Locator
+    readonly codigoKhipuTexto: Locator
     readonly valor: Locator
-    readonly descriptionCodigoPUX: Locator
-    readonly botaoCopiarCodigoPix: Locator
+    readonly descriptionCodigoKhipu: Locator
+    readonly botaoCopiarCodigoKhipu: Locator
     readonly botaoCopiarCodigoPixCopiado: Locator
     readonly botaoVoltarInvestir: Locator
     readonly imgQRCode: Locator
@@ -32,28 +38,34 @@ export class DepositoInfluencerPage {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
         this.titulo = this.page.getByText('Selecione o tipo de depósito')
-        this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
-        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
-        this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
-        this.tituloPix = this.page.getByText('Pix').first()
-        this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
-        this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
+        this.descricao = this.page.getByText('Nossa plataforma oferece duas contas de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
+        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
+        this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
+        this.tituloCriptomoeda = this.page.getByText('Criptomoeda').first()
+        this.valorMinimoCriptomoeda = this.page.getByText('Valor mínimo: 10 USDT')
+        this.descricaoCriptomoeda = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
+        /*--- Mapeamento da tela de "Selecione o tipo de depósito - Khipu" ---*/
+        this.imgKhipu = this.page.getByAltText('Khipu Icon')
+        this.tituloKhipu = this.page.getByText('Khipu').first()
+        this.valorMinimoKhipu = this.page.getByText('Valor mínimo: $10.00')
+        this.descricaoKhipu = this.page.getByText('90% dos depósitos feitos via Khipu são processados em minutos.')
         this.descricaoImportante = this.page.getByText('Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
         this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.escolhaValorDescricao = this.page.getByText('Note que todos os valores estão em real')
+        this.escolhaValorDescricao = this.page.getByText('Observe que todos os valores estão em dólares americanos (USD).')
+        this.valorMinimoKhipuEscolhaValor = this.page.getByText('Valor mínimo: $10')
         this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('Depósitos por pix são processados em poucos minutos. Ao continuar, concordo com os')
-        /*--- Mapeamento da tela de "QR Code" ---*/
-        this.codigoPixTexto = this.page.getByText('Seu código pix')
-        this.valor = this.page.getByText('R$60.00')
-        this.descriptionCodigoPUX = this.page.getByText('Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CPF.')
-        this.botaoCopiarCodigoPix = this.page.getByRole('button', { name: 'Copiar código pix' })
-        this.botaoCopiarCodigoPixCopiado = this.page.getByRole('button', { name: 'Código PIX copiado!' })
+        this.termosCondicoesTexto = this.page.getByText('90% dos depósitos feitos via Khipu são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.')
+        this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
+        /*--- Mapeamento da tela de "código de pagamento" ---*/
+        this.codigoKhipuTexto = this.page.getByText('Finalize seu pagamento usando o link abaixo')
+        this.valor = this.page.getByText('Valor solicitado: $200.00')
+        this.descriptionCodigoKhipu = this.page.getByText('Por favor, note que a conta de onde o depósito será feito deve estar registrada sob o mesmo número de identidade.')
+        this.botaoCopiarCodigoKhipu = this.page.getByRole('button', { name: 'Abrir página de pagamento' })
         this.botaoVoltarInvestir = this.page.getByText('Voltar para Investir')
         this.imgQRCode = this.page.locator('img[alt="QRcode"]')
     }
@@ -76,55 +88,57 @@ export class DepositoInfluencerPage {
         await this.assertVisible(
             this.titulo,
             this.descricao,
-            this.imgPix,
-            this.tituloPix,
-            this.valorMinimoPix,
-            this.descricaoPix,
+            this.imgCriptomoedas,
+            this.tituloCriptomoeda,
+            this.valorMinimoCriptomoeda,
+            this.descricaoCriptomoeda,
+            this.imgKhipu,
+            this.tituloKhipu,
+            this.valorMinimoKhipu,
+            this.descricaoKhipu,
             this.descricaoImportante,
             this.transacaoProtegidaTexto
         )
 
-        await this.tituloPix.click()
-        await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
+        await this.tituloKhipu.click()
 
         await this.assertVisible(
             this.escolhaValorTitulo,
-            this.imgPix,
             this.escolhaValorDescricao,
+            this.imgKhipu,
+            this.valorMinimoKhipuEscolhaValor,
             this.inserirCodigoTexto,
-            this.codigoCupomTexto,
             this.placeholderCodigoCupom,
-            this.aplicarBotao,
+            this.codigoCupomTexto,
             this.termosCondicoesTexto,
-            this.transacaoProtegidaTexto,
+            this.aplicarBotao,
+            this.redirecionamentoTexto,
         )
-
-        await expect(this.page.getByText('Valor mínimo: R$60', { exact: true })).toBeVisible()
 
         const listaValores = [
             {
-                valor: 'R$60',
+                valor: '$20'
             },
             {
-                valor: 'R$100'
+                valor: '$40'
             },
             {
-                valor: 'R$250'
+                valor: '$60'
             },
             {
-                valor: 'R$500',
+                valor: '$100'
             },
             {
-                valor: 'R$1,000'
+                valor: '$200'
             },
             {
-                valor: 'R$3,000'
+                valor: '$500'
             },
             {
-                valor: 'R$5,000'
+                valor: '$1,000'
             },
             {
-                valor: 'R$10,000'
+                valor: '$2,000'
             }
         ]
 
@@ -139,9 +153,9 @@ export class DepositoInfluencerPage {
             const intPattern = numberPatternFromDigits(onlyDigits)
             /* --- aceita opcionalmente a parte decimal com 2 casas (ponto ou vírgula) ---*/
             const decimalPart = '(?:[.,]\\d{2})?'
-            const depositPattern = new RegExp(`Depósito\\s+R\\$\\s*${intPattern}${decimalPart}`)
+            const depositPattern = new RegExp(`Depósito\\s+\\$\\s*${intPattern}${decimalPart}`)
 
-            const button = this.page.getByRole('button', { name: valor })
+            const button = this.page.getByRole('button', { name: valor, exact: true })
             await expect(button).toBeVisible({ timeout: 5000 })
             await button.click()
 
@@ -149,18 +163,17 @@ export class DepositoInfluencerPage {
             await expect(this.page.getByText(depositPattern).first()).toBeVisible({ timeout: 5000 })
         }
 
-        await this.page.getByRole('button', { name: 'R$60' }).click()
-        await this.page.getByRole('button', { name: 'Depósito R$60.00' }).click()
+        await this.page.getByRole('button', { name: '$200', exact: true }).click()
+        await this.page.getByRole('button', { name: 'Depósito $200.00', exact: true }).click()
 
         await Promise.all([
-            this.codigoPixTexto.waitFor({ timeout: 10000 })
+            this.codigoKhipuTexto.waitFor({ timeout: 10000 })
         ])
 
         await this.assertVisible(
             this.valor,
-            this.descriptionCodigoPUX,
-            this.botaoCopiarCodigoPix,
-            this.botaoVoltarInvestir,
+            this.descriptionCodigoKhipu,
+            this.botaoCopiarCodigoKhipu,
             this.transacaoProtegidaTexto,
             this.imgQRCode
         )
@@ -168,19 +181,15 @@ export class DepositoInfluencerPage {
         const listaStepsPagamentos = [
             {
                 step: '1.',
-                name: 'Acesse seu internet banking'
+                name: 'Abra a página com o link abaixo ou com o código QR.'
             },
             {
                 step: '2.',
-                name: 'Opte por pagar via PIX.'
+                name: 'Siga as instruções na página de pagamento.'
             },
             {
                 step: '3.',
-                name: 'Copie e cole o código ou digitalize-o.'
-            },
-            {
-                step: '4.',
-                name: 'Este código PIX é válido por 24 horas'
+                name: 'Este código é válido por 6 horas.'
             }
         ]
 
