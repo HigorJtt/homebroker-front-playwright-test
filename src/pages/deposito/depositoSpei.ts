@@ -3,7 +3,7 @@ import { Page, Locator, expect } from '@playwright/test'
 import { Deposito } from '@/src/components/navigation/deposito/deposito'
 import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
-export class DepositoOxxoPage {
+export class DepositoSpeiPage {
     readonly page: Page
     readonly titulo: Locator
     readonly descricao: Locator
@@ -29,7 +29,7 @@ export class DepositoOxxoPage {
     readonly termosCondicoesTexto: Locator
     readonly transacaoProtegidaTexto: Locator
     readonly redirecionamentoTexto: Locator
-    readonly codigoOxxoTexto: Locator
+    readonly codigoSpeiTexto: Locator
     readonly valor: Locator
     readonly descriptionCodigoOxxo: Locator
     readonly botaoCopiarCodigoOxxo: Locator
@@ -63,15 +63,16 @@ export class DepositoOxxoPage {
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis. Ao continuar, concordo com os')
+        this.termosCondicoesTexto = this.page.getByText('90% dos depósitos por SPEI são processados em poucos minutos. Ao continuar, concordo com os')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
         /*--- Mapeamento da tela de "código de pagamento" ---*/
-        this.codigoOxxoTexto = this.page.getByText('Seu código de pagamento')
+        this.codigoSpeiTexto = this.page.getByText('Seu código de pagamento')
         this.valor = this.page.getByText('MX$200.00')
         this.descriptionCodigoOxxo = this.page.getByText('Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CURP.')
         this.botaoCopiarCodigoOxxo = this.page.getByRole('button', { name: 'Abrir página de pagamento' })
         this.botaoVoltarInvestir = this.page.getByText('Voltar para Investir')
+        this.imgQRCode = this.page.locator('img[alt="QRcode"]')
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -123,11 +124,11 @@ export class DepositoOxxoPage {
         const oxxo = this.page.getByRole('link', { name: /OXXO/i })
         await expect(oxxo.getByText('Valor mínimo: MX$200.00')).toBeVisible()
 
-        await this.tituloOxxo.click()
+        await this.tituloSpei.click()
 
         await this.assertVisible(
             this.escolhaValorTitulo,
-            this.imgOxxo,
+            this.imgSpei,
             this.escolhaValorDescricao,
             this.termosCondicoesTexto,
             this.transacaoProtegidaTexto,
@@ -195,32 +196,33 @@ export class DepositoOxxoPage {
         await this.page.getByRole('button', { name: 'Depósito MX$200.00' }).click()
 
         await Promise.all([
-            this.codigoOxxoTexto.waitFor({ timeout: 10000 })
+            this.codigoSpeiTexto.waitFor({ timeout: 10000 })
         ])
 
         await this.assertVisible(
             this.valor,
             this.descriptionCodigoOxxo,
             this.botaoCopiarCodigoOxxo,
-            this.transacaoProtegidaTexto
+            this.transacaoProtegidaTexto,
+            this.imgQRCode
         )
 
         const listaStepsPagamentos = [
             {
                 step: '1.',
-                name: 'Abra o link de pagamento.'
+                name: 'Acesse seu banco.'
             },
             {
                 step: '2.',
-                name: 'Vá a qualquer loja OXXO'
+                name: 'Opte por pagar por SPEI.'
             },
             {
                 step: '3.',
-                name: 'Informe ao caixa que você deseja efetuar um pagamento e mostre o código de barras que está no link de pagamento.'
+                name: 'Siga as instruções na página de pagamento'
             },
             {
                 step: '4.',
-                name: 'Pronto! Seu pagamento será creditado em 1 a 2 dias úteis e você receberá um e-mail de confirmação.'
+                name: 'Este código é válido por 2 horas.'
             }
         ]
 
