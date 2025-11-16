@@ -12,6 +12,7 @@ export class Login {
     readonly verificationInput: Locator
     readonly verifyButton: Locator
     readonly onboardingTitulo: Locator
+    readonly programaVip: Locator
 
     constructor(page: Page) {
         this.page = page
@@ -22,6 +23,7 @@ export class Login {
         this.verificationInput = this.page.locator('input')
         this.verifyButton = this.page.getByRole('button', { name: 'Verificar código' })
         this.onboardingTitulo = this.page.getByText('Bem-vindo à HomeBroker')
+        this.programaVip = this.page.getByText('Vantagens e bônus especiais')
     }
 
     async abrir() {
@@ -47,6 +49,9 @@ export class Login {
 
         if (await this.onboardingTitulo.isVisible()) {
             await this.page.getByTestId('CloseIcon').click()
+        }
+        if (await this.programaVip.isVisible()) {
+            this.page.getByText('Não mostrar novamente').click()
         }
     }
 }

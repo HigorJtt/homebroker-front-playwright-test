@@ -29,7 +29,7 @@ export default defineConfig({
         // baseURL: 'http://localhost:3000',
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-        baseURL: process.env.BASE_URL ?? process.env.HML_URL ?? 'https://homebroker-hml.homebroker.com',
+        baseURL: process.env.BASE_URL ?? process.env.HML_URL ?? 'https://hml.homebroker.com',
         trace: 'on-first-retry',
     },
 

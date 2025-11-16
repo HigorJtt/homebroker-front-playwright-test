@@ -5,26 +5,14 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class ConfiguracoesPage {
     readonly page: Page
-    readonly header: Locator
     readonly voltarBotao: Locator
     readonly preferenciaTexto: Locator
-    readonly segurancaTexto: Locator
-    readonly legalTexto: Locator
-    readonly alert: Locator
-    readonly sonsLink: Locator
-    readonly sonsHeading: Locator
     readonly desempenho: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.header = this.page.getByText('Configurações')
         this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
         this.preferenciaTexto = this.page.getByText('Preferência').first()
-        this.segurancaTexto = this.page.getByText('Segurança')
-        this.legalTexto = this.page.getByText('Legal')
-        this.alert = this.page.getByRole('alert')
-        this.sonsLink = this.page.getByRole('link', { name: 'Som Sons do sistema' })
-        this.sonsHeading = this.page.getByRole('heading', { name: 'Sons do sistema' })
         this.desempenho = this.page.getByText('Desempenho').first()
     }
 
@@ -48,10 +36,9 @@ export class ConfiguracoesPage {
         await this.abrirConfiguracoes(creds)
 
         await this.assertVisible(
-            this.header,
-            this.preferenciaTexto,
-            this.segurancaTexto,
-            this.legalTexto,
+            'Configurações',
+            'Segurança',
+            'Legal',
             this.voltarBotao
         )
 

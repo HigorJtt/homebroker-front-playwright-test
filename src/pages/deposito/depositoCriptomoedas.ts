@@ -5,56 +5,32 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class DepositoCriptomoedasPage {
     readonly page: Page
-    readonly titulo: Locator
-    readonly descricao: Locator
-    readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoedas: Locator
-    readonly valorMinimoCriptomoedas: Locator
-    readonly descricaoCriptomoedas: Locator
     readonly imgPix: Locator
     readonly tituloPix: Locator
-    readonly valorMinimoPix: Locator
-    readonly descricaoPix: Locator
-    readonly descricaoImportante: Locator
+    readonly imgCriptomoedas: Locator
+    readonly tituloCriptomoedas: Locator
     readonly transacaoProtegidaTexto: Locator
     readonly escolhaValorTitulo: Locator
-    readonly escolhaValorDescricao: Locator
     readonly valorMinimoCriptomoedasEscolhaValor: Locator
-    readonly inserirCodigoTexto: Locator
-    readonly codigoCupomTexto: Locator
     readonly placeholderCodigoCupom: Locator
     readonly aplicarBotao: Locator
-    readonly termosCondicoesTexto: Locator
-
     readonly selecioneCriptomoedaTitulo: Locator
     readonly selecioneCriptomoedaDescricao: Locator
 
     constructor(page: Page) {
         this.page = page
-        /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
-        this.titulo = this.page.getByText('Selecione o tipo de depósito')
-        this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
         this.tituloPix = this.page.getByText('Pix').first()
-        this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
-        this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         this.tituloCriptomoedas = this.page.getByText('Criptomoeda').first()
-        this.valorMinimoCriptomoedas = this.page.getByText('Valor mínimo: 10 USDT')
-        this.descricaoCriptomoedas = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
-        this.descricaoImportante = this.page.getByText('Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
         this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.escolhaValorDescricao = this.page.getByText('Observe que todos os valores estão em dólares americanos (USD).')
-        this.valorMinimoCriptomoedasEscolhaValor = this.page.getByText('Valor mínimo: $10')
-        this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
-        this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
+        this.valorMinimoCriptomoedasEscolhaValor = this.page.getByText('')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('Depósitos em criptomoedas são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.')
         /*--- Mapeamento da tela de "Selecione sua criptomoeda" ---*/
         this.selecioneCriptomoedaTitulo = this.page.getByText('Selecione sua criptomoeda')
         this.selecioneCriptomoedaDescricao = this.page.getByText('Selecione um dos ativos disponíveis para fazer o depósito.')
@@ -87,17 +63,20 @@ export class DepositoCriptomoedasPage {
         await this.abrirDeposito(creds)
 
         await this.assertVisible(
-            this.titulo,
-            this.descricao,
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
+            'Selecione o tipo de depósito',
+            'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
             this.imgPix,
             this.tituloPix,
-            this.valorMinimoPix,
-            this.descricaoPix,
+            'Valor mínimo: R$60.00',
+            'Depósitos por pix são processados em poucos minutos',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
             this.tituloCriptomoedas,
-            this.valorMinimoCriptomoedas,
-            this.descricaoCriptomoedas,
-            this.descricaoImportante,
+            'Valor mínimo: 10 USDT',
+            'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
+            'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
             this.transacaoProtegidaTexto
         )
 
@@ -105,39 +84,24 @@ export class DepositoCriptomoedasPage {
         await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
 
         await this.assertVisible(
+            /*--- Mapeamento da tela de "Escolha o valor" ---*/
             this.escolhaValorTitulo,
             this.imgCriptomoedas,
-            this.escolhaValorDescricao,
-            this.valorMinimoCriptomoedasEscolhaValor,
-            this.termosCondicoesTexto,
+            'Observe que todos os valores estão em dólares americanos (USD).',
+            'Valor mínimo: $10',
+            'Depósitos em criptomoedas são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
             this.transacaoProtegidaTexto
         )
 
         const listaValores = [
-            {
-                valor: '$50'
-            },
-            {
-                valor: '$100'
-            },
-            {
-                valor: '$250'
-            },
-            {
-                valor: '$500'
-            },
-            {
-                valor: '$1,000'
-            },
-            {
-                valor: '$5,000'
-            },
-            {
-                valor: '$10,000'
-            },
-            {
-                valor: '$40,000'
-            }
+            { valor: '$50' },
+            { valor: '$100' },
+            { valor: '$250' },
+            { valor: '$500' },
+            { valor: '$1,000' },
+            { valor: '$5,000' },
+            { valor: '$10,000' },
+            { valor: '$40,000' }
         ]
 
         function numberPatternFromDigits(digitsStr) {
@@ -162,9 +126,9 @@ export class DepositoCriptomoedasPage {
         }
 
         await this.assertNotVisible(
-            this.inserirCodigoTexto,
+            'Tem um código de cupom? Insira abaixo.',
             this.placeholderCodigoCupom,
-            this.codigoCupomTexto,
+            'Código do cupom',
             this.aplicarBotao
         )
 

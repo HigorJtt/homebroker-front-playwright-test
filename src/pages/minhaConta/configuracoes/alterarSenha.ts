@@ -24,7 +24,6 @@ export class AlterarSenhaPage {
         this.page = page
         this.alterarSenha = this.page.getByText('Alterar sua senha').first()
         this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
-        this.mudeSuaSenha = this.page.getByText('Mude sua senha')
         this.senhaAntiga = this.page.getByText('Senha antiga').first()
         this.placeholderSenhaAntiga = this.page.locator('input[placeholder="Insira sua senha antiga"]')
         this.novaSenha = this.page.getByText('Nova senha').first()
@@ -32,9 +31,6 @@ export class AlterarSenhaPage {
         this.confirmeSuaSenha = this.page.getByText('Confirme sua senha').first()
         this.placeholderConfirmeSuaSenha = this.page.locator('input[placeholder="Confirme sua senha"]')
         this.salvarBotao = this.page.getByRole('button', { name: 'Salvar' })
-        this.cancelarBotao = this.page.getByText('Cancelar')
-        this.mensagemInformativaSenhaAntiga = this.page.getByText('A senha é obrigatória')
-        this.mensagemInformativaNovaSenha = this.page.getByText('Pelo menos 8 caracteres')
         this.alert = this.page.getByRole('alert')
     }
 
@@ -63,12 +59,12 @@ export class AlterarSenhaPage {
 
         await this.assertVisible(
             this.voltarBotao,
-            this.mudeSuaSenha,
+            'Mude sua senha',
             this.senhaAntiga,
             this.novaSenha,
             this.confirmeSuaSenha,
             this.salvarBotao,
-            this.cancelarBotao,
+            'Cancelar',
             this.placeholderSenhaAntiga,
             this.placeholderNovaSenha,
             this.placeholderConfirmeSuaSenha
@@ -80,7 +76,7 @@ export class AlterarSenhaPage {
 
         await this.alterarSenha.click()
         await this.salvarBotao.click()
-        await this.assertVisible(this.mensagemInformativaSenhaAntiga, this.mensagemInformativaNovaSenha)
+        await this.assertVisible('A senha é obrigatória', 'Pelo menos 8 caracteres')
     }
 
     async validarMensagemInformativaConfirmeSuaSenha(creds: CredenciaisLogin) {

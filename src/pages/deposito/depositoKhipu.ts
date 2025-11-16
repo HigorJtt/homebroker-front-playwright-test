@@ -37,29 +37,29 @@ export class DepositoKhipuPage {
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
-        this.titulo = this.page.getByText('Selecione o tipo de depósito')
-        this.descricao = this.page.getByText('Nossa plataforma oferece duas contas de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
+        this.titulo = this.page.getByText('')
+        this.descricao = this.page.getByText('')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         this.tituloCriptomoeda = this.page.getByText('Criptomoeda').first()
-        this.valorMinimoCriptomoeda = this.page.getByText('Valor mínimo: 10 USDT')
-        this.descricaoCriptomoeda = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
+        this.valorMinimoCriptomoeda = this.page.getByText('')
+        this.descricaoCriptomoeda = this.page.getByText('')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Khipu" ---*/
         this.imgKhipu = this.page.getByAltText('Khipu Icon')
         this.tituloKhipu = this.page.getByText('Khipu').first()
-        this.valorMinimoKhipu = this.page.getByText('Valor mínimo: $10.00')
-        this.descricaoKhipu = this.page.getByText('90% dos depósitos feitos via Khipu são processados em minutos.')
-        this.descricaoImportante = this.page.getByText('Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.')
+        this.valorMinimoKhipu = this.page.getByText('')
+        this.descricaoKhipu = this.page.getByText('')
+        this.descricaoImportante = this.page.getByText('')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.escolhaValorDescricao = this.page.getByText('Observe que todos os valores estão em dólares americanos (USD).')
-        this.valorMinimoKhipuEscolhaValor = this.page.getByText('Valor mínimo: $10')
-        this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
+        this.escolhaValorTitulo = this.page.getByText('')
+        this.escolhaValorDescricao = this.page.getByText('')
+        this.valorMinimoKhipuEscolhaValor = this.page.getByText('')
+        this.inserirCodigoTexto = this.page.getByText('')
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('90% dos depósitos feitos via Khipu são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.')
+        this.termosCondicoesTexto = this.page.getByText('')
         this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
         /*--- Mapeamento da tela de "código de pagamento" ---*/
         this.codigoKhipuTexto = this.page.getByText('Finalize seu pagamento usando o link abaixo')
@@ -86,60 +86,47 @@ export class DepositoKhipuPage {
         await this.abrirDeposito(creds)
 
         await this.assertVisible(
-            this.titulo,
-            this.descricao,
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
+            'Selecione o tipo de depósito',
+            'Nossa plataforma oferece duas contas de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
             this.tituloCriptomoeda,
-            this.valorMinimoCriptomoeda,
-            this.descricaoCriptomoeda,
+            'Valor mínimo: 10 USDT',
+            'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Khipu" ---*/
             this.imgKhipu,
             this.tituloKhipu,
-            this.valorMinimoKhipu,
-            this.descricaoKhipu,
-            this.descricaoImportante,
+            'Valor mínimo: $10.00',
+            '90% dos depósitos feitos via Khipu são processados em minutos.',
+            'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
             this.transacaoProtegidaTexto
         )
 
         await this.tituloKhipu.click()
 
         await this.assertVisible(
-            this.escolhaValorTitulo,
-            this.escolhaValorDescricao,
+            'Escolha o valor',
+            'Observe que todos os valores estão em dólares americanos (USD).',
             this.imgKhipu,
-            this.valorMinimoKhipuEscolhaValor,
-            this.inserirCodigoTexto,
+            'Valor mínimo: $10',
+            'Tem um código de cupom? Insira abaixo.',
             this.placeholderCodigoCupom,
             this.codigoCupomTexto,
-            this.termosCondicoesTexto,
+            '90% dos depósitos feitos via Khipu são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
             this.aplicarBotao,
             this.redirecionamentoTexto,
         )
 
         const listaValores = [
-            {
-                valor: '$20'
-            },
-            {
-                valor: '$40'
-            },
-            {
-                valor: '$60'
-            },
-            {
-                valor: '$100'
-            },
-            {
-                valor: '$200'
-            },
-            {
-                valor: '$500'
-            },
-            {
-                valor: '$1,000'
-            },
-            {
-                valor: '$2,000'
-            }
+            { valor: '$20' },
+            { valor: '$40' },
+            { valor: '$60' },
+            { valor: '$100' },
+            { valor: '$200' },
+            { valor: '$500' },
+            { valor: '$1,000' },
+            { valor: '$2,000' }
         ]
 
         function numberPatternFromDigits(digitsStr) {
