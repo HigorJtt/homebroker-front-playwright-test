@@ -9,23 +9,14 @@ export class DepositoInfluencerPage {
     readonly descricao: Locator
     readonly imgPix: Locator
     readonly tituloPix: Locator
-    readonly valorMinimoPix: Locator
-    readonly descricaoPix: Locator
-    readonly descricaoImportante: Locator
+    readonly transacaoProtegidaTexto: Locator
     readonly escolhaValorTitulo: Locator
-    readonly escolhaValorDescricao: Locator
-    readonly inserirCodigoTexto: Locator
     readonly codigoCupomTexto: Locator
     readonly placeholderCodigoCupom: Locator
     readonly aplicarBotao: Locator
-    readonly termosCondicoesTexto: Locator
-    readonly transacaoProtegidaTexto: Locator
     readonly codigoPixTexto: Locator
-    readonly valor: Locator
-    readonly descriptionCodigoPUX: Locator
     readonly botaoCopiarCodigoPix: Locator
     readonly botaoCopiarCodigoPixCopiado: Locator
-    readonly botaoVoltarInvestir: Locator
     readonly imgQRCode: Locator
 
     constructor(page: Page) {
@@ -36,25 +27,16 @@ export class DepositoInfluencerPage {
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
         this.tituloPix = this.page.getByText('Pix').first()
-        this.valorMinimoPix = this.page.getByText('Valor mínimo: R$60.00')
-        this.descricaoPix = this.page.getByText('Depósitos por pix são processados em poucos minutos')
-        this.descricaoImportante = this.page.getByText('Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
         this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.escolhaValorDescricao = this.page.getByText('Note que todos os valores estão em real')
-        this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('Depósitos por pix são processados em poucos minutos. Ao continuar, concordo com os')
         /*--- Mapeamento da tela de "QR Code" ---*/
         this.codigoPixTexto = this.page.getByText('Seu código pix')
-        this.valor = this.page.getByText('R$60.00')
-        this.descriptionCodigoPUX = this.page.getByText('Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CPF.')
         this.botaoCopiarCodigoPix = this.page.getByRole('button', { name: 'Copiar código pix' })
         this.botaoCopiarCodigoPixCopiado = this.page.getByRole('button', { name: 'Código PIX copiado!' })
-        this.botaoVoltarInvestir = this.page.getByText('Voltar para Investir')
         this.imgQRCode = this.page.locator('img[alt="QRcode"]')
     }
 
@@ -74,13 +56,15 @@ export class DepositoInfluencerPage {
         await this.abrirDeposito(creds)
 
         await this.assertVisible(
-            this.titulo,
-            this.descricao,
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
+            'Selecione o tipo de depósito',
+            'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
             this.imgPix,
             this.tituloPix,
-            this.valorMinimoPix,
-            this.descricaoPix,
-            this.descricaoImportante,
+            'Valor mínimo: R$60.00',
+            'Depósitos por pix são processados em poucos minutos',
+            'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
             this.transacaoProtegidaTexto
         )
 
@@ -88,44 +72,29 @@ export class DepositoInfluencerPage {
         await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
 
         await this.assertVisible(
-            this.escolhaValorTitulo,
+            /*--- Mapeamento da tela de "Escolha o valor" ---*/
+            'Escolha o valor',
             this.imgPix,
-            this.escolhaValorDescricao,
-            this.inserirCodigoTexto,
+            'Note que todos os valores estão em real',
+            'Tem um código de cupom? Insira abaixo.',
             this.codigoCupomTexto,
             this.placeholderCodigoCupom,
             this.aplicarBotao,
-            this.termosCondicoesTexto,
+            'Depósitos por pix são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
             this.transacaoProtegidaTexto,
         )
 
         await expect(this.page.getByText('Valor mínimo: R$60', { exact: true })).toBeVisible()
 
         const listaValores = [
-            {
-                valor: 'R$60',
-            },
-            {
-                valor: 'R$100'
-            },
-            {
-                valor: 'R$250'
-            },
-            {
-                valor: 'R$500',
-            },
-            {
-                valor: 'R$1,000'
-            },
-            {
-                valor: 'R$3,000'
-            },
-            {
-                valor: 'R$5,000'
-            },
-            {
-                valor: 'R$10,000'
-            }
+            { valor: 'R$60' },
+            { valor: 'R$100' },
+            { valor: 'R$250' },
+            { valor: 'R$500' },
+            { valor: 'R$1,000' },
+            { valor: 'R$3,000' },
+            { valor: 'R$5,000' },
+            { valor: 'R$10,000' }
         ]
 
         function numberPatternFromDigits(digitsStr) {
@@ -157,10 +126,10 @@ export class DepositoInfluencerPage {
         ])
 
         await this.assertVisible(
-            this.valor,
-            this.descriptionCodigoPUX,
+            'R$60.00',
+            'Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CPF.',
             this.botaoCopiarCodigoPix,
-            this.botaoVoltarInvestir,
+            'Voltar para Investir',
             this.transacaoProtegidaTexto,
             this.imgQRCode
         )

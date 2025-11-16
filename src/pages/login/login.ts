@@ -84,7 +84,7 @@ export class LoginPage {
     }
 
     async validarMensagemInformativaSenhaIncorreta(creds: CredenciaisLogin) {
-        const target = 'https://homebroker-hml.homebroker.com/pt/sign-in'
+        const target = '/pt/sign-in'
         await this.page.goto(target)
         await expect(this.page).toHaveTitle('Home Broker')
         await this.page.waitForTimeout(5000)

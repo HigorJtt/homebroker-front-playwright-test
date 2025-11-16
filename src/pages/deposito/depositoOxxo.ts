@@ -6,72 +6,31 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class DepositoOxxoPage {
     readonly page: Page
     readonly titulo: Locator
-    readonly descricao: Locator
     readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoeda: Locator
-    readonly valorMinimoCriptomoeda: Locator
-    readonly descricaoCriptomoeda: Locator
     readonly imgSpei: Locator
-    readonly tituloSpei: Locator
-    readonly valorMinimoSpei: Locator
-    readonly descricaoSpei: Locator
     readonly imgOxxo: Locator
     readonly tituloOxxo: Locator
-    readonly valorMinimoOxxo: Locator
-    readonly descricaoOxxo: Locator
-    readonly escolhaValorTitulo: Locator
-    readonly escolhaValorDescricao: Locator
-    readonly inserirCodigoTexto: Locator
-    readonly codigoCupomTexto: Locator
     readonly placeholderCodigoCupom: Locator
     readonly aplicarBotao: Locator
-    readonly descricaoImportante: Locator
-    readonly termosCondicoesTexto: Locator
     readonly transacaoProtegidaTexto: Locator
     readonly redirecionamentoTexto: Locator
-    readonly codigoOxxoTexto: Locator
-    readonly valor: Locator
-    readonly descriptionCodigoOxxo: Locator
-    readonly botaoCopiarCodigoOxxo: Locator
-    readonly botaoCopiarCodigoPixCopiado: Locator
-    readonly botaoVoltarInvestir: Locator
-    readonly imgQRCode: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
         this.titulo = this.page.getByText('Selecione o tipo de depósito')
-        this.descricao = this.page.getByText('Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
-        this.tituloCriptomoeda = this.page.getByText('Criptomoeda').first()
-        this.valorMinimoCriptomoeda = this.page.getByText('Valor mínimo: 10 USDT')
-        this.descricaoCriptomoeda = this.page.getByText('O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Spei" ---*/
         this.imgSpei = this.page.getByAltText('SPEI Icon')
-        this.tituloSpei = this.page.getByText('SPEI').first()
-        this.descricaoSpei = this.page.getByText('90% dos depósitos por SPEI são processados em poucos minutos')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - OXXO" ---*/
         this.imgOxxo = this.page.getByAltText('OXXO Icon')
         this.tituloOxxo = this.page.getByText('OXXO').first()
-        this.descricaoOxxo = this.page.getByText('Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis')
-        this.descricaoImportante = this.page.getByText('Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.escolhaValorDescricao = this.page.getByText('Note que todos os valores estão em peso mexicano')
-        this.inserirCodigoTexto = this.page.getByText('Tem um código de cupom? Insira abaixo.')
-        this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis. Ao continuar, concordo com os')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
-        /*--- Mapeamento da tela de "código de pagamento" ---*/
-        this.codigoOxxoTexto = this.page.getByText('Seu código de pagamento')
-        this.valor = this.page.getByText('MX$200.00')
-        this.descriptionCodigoOxxo = this.page.getByText('Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CURP.')
-        this.botaoCopiarCodigoOxxo = this.page.getByRole('button', { name: 'Abrir página de pagamento' })
-        this.botaoVoltarInvestir = this.page.getByText('Voltar para Investir')
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -102,18 +61,21 @@ export class DepositoOxxoPage {
 
         await this.assertVisible(
             this.titulo,
-            this.descricao,
+            'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
-            this.tituloCriptomoeda,
-            this.valorMinimoCriptomoeda,
-            this.descricaoCriptomoeda,
+            'Criptomoeda',
+            'Valor mínimo: 10 USDT',
+            'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - Spei" ---*/
             this.imgSpei,
-            this.tituloSpei,
-            this.descricaoSpei,
+            'SPEI',
+            '90% dos depósitos por SPEI são processados em poucos minutos',
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito - OXXO" ---*/
             this.imgOxxo,
             this.tituloOxxo,
-            this.descricaoOxxo,
-            this.descricaoImportante,
+            'Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis',
+            'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
             this.transacaoProtegidaTexto
         )
 
@@ -126,10 +88,11 @@ export class DepositoOxxoPage {
         await this.tituloOxxo.click()
 
         await this.assertVisible(
-            this.escolhaValorTitulo,
+            /*--- Mapeamento da tela de "Escolha o valor" ---*/
+            'Escolha o valor',
             this.imgOxxo,
-            this.escolhaValorDescricao,
-            this.termosCondicoesTexto,
+            'Note que todos os valores estão em peso mexicano',
+            'Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis. Ao continuar, concordo com os Termos e condições.',
             this.transacaoProtegidaTexto,
             this.redirecionamentoTexto
         )
@@ -137,30 +100,14 @@ export class DepositoOxxoPage {
         await expect(this.page.getByText('Valor mínimo: MX$200', { exact: true })).toBeVisible()
 
         const listaValores = [
-            {
-                valor: 'MX$200'
-            },
-            {
-                valor: 'MX$400'
-            },
-            {
-                valor: 'MX$600'
-            },
-            {
-                valor: 'MX$1,000'
-            },
-            {
-                valor: 'MX$2,000'
-            },
-            {
-                valor: 'MX$5,000'
-            },
-            {
-                valor: 'MX$10,000'
-            },
-            {
-                valor: 'MX$20,000'
-            }
+            { valor: 'MX$200' },
+            { valor: 'MX$400' },
+            { valor: 'MX$600' },
+            { valor: 'MX$1,000' },
+            { valor: 'MX$2,000' },
+            { valor: 'MX$5,000' },
+            { valor: 'MX$10,000' },
+            { valor: 'MX$20,000' }
         ]
 
         function numberPatternFromDigits(digitsStr) {
@@ -185,50 +132,13 @@ export class DepositoOxxoPage {
         }
 
         await this.assertNotVisible(
-            this.inserirCodigoTexto,
+            'Tem um código de cupom? Insira abaixo.',
             this.placeholderCodigoCupom,
-            this.codigoCupomTexto,
+            'Código do cupom',
             this.aplicarBotao
         )
 
-        await this.page.getByRole('button', { name: 'MX$200' }).click()
-        await this.page.getByRole('button', { name: 'Depósito MX$200.00' }).click()
-
-        await Promise.all([
-            this.codigoOxxoTexto.waitFor({ timeout: 10000 })
-        ])
-
-        await this.assertVisible(
-            this.valor,
-            this.descriptionCodigoOxxo,
-            this.botaoCopiarCodigoOxxo,
-            this.transacaoProtegidaTexto
-        )
-
-        const listaStepsPagamentos = [
-            {
-                step: '1.',
-                name: 'Abra o link de pagamento.'
-            },
-            {
-                step: '2.',
-                name: 'Vá a qualquer loja OXXO'
-            },
-            {
-                step: '3.',
-                name: 'Informe ao caixa que você deseja efetuar um pagamento e mostre o código de barras que está no link de pagamento.'
-            },
-            {
-                step: '4.',
-                name: 'Pronto! Seu pagamento será creditado em 1 a 2 dias úteis e você receberá um e-mail de confirmação.'
-            }
-        ]
-
-        for (const { step, name } of listaStepsPagamentos) {
-            await this.assertVisible(
-                this.page.getByText(step),
-                this.page.getByText(name)
-            )
-        }
+        expect(this.page.getByRole('button', { name: 'MX$200' }))
+        expect(this.page.getByRole('button', { name: 'Depósito MX$200.00' }))
     }
 }

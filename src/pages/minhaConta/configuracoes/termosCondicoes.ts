@@ -9,12 +9,10 @@ export class TermosCondicoesPage {
     readonly titulo: Locator
     readonly descricao: Locator
     readonly alert: Locator
-    readonly homebrokerTitulo: Locator
 
     constructor(page: Page) {
         this.page = page
         this.termosCondicoes = this.page.getByText('Termos e condições')
-        this.homebrokerTitulo = this.page.getByText('Termos e Condições de Uso da Plataforma HomeBroker')
     }
 
     async abrirTermosCondicoes(creds: CredenciaisLogin) {
@@ -34,7 +32,7 @@ export class TermosCondicoesPage {
 
         await this.termosCondicoes.click()
         await this.page.waitForURL('**/pt/terms-and-conditions', { timeout: 10000 })
-        await this.assertVisible(this.homebrokerTitulo)
+        await this.assertVisible('Termos e Condições de Uso da Plataforma HomeBroker')
 
         const listaTermos = [
             `Estes Termos e Condições (doravante referidos como “Acordo”) regulam a relação jurídica entre a HomeBroker, operando sob a marca global HomeBroker (doravante referida como “Empresa” ou “HomeBroker”), e o usuário (uma pessoa física ou jurídica) (doravante referida como “Cliente”) do site www.homebroker.com (doravante referido como “Website”).`,

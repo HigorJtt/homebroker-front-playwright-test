@@ -6,15 +6,10 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class PoliticaPrivacidadePage {
     readonly page: Page
     readonly politicaPrivacidade: Locator
-    readonly titulo: Locator
-    readonly descricao: Locator
-    readonly alert: Locator
-    readonly homebrokerTitulo: Locator
 
     constructor(page: Page) {
         this.page = page
         this.politicaPrivacidade = this.page.getByText('Política de privacidade')
-        this.homebrokerTitulo = this.page.getByText('Política de Privacidade', { exact: true })
     }
 
     async abrirPoliticaPrivacidade(creds: CredenciaisLogin) {
@@ -34,7 +29,7 @@ export class PoliticaPrivacidadePage {
 
         await this.politicaPrivacidade.click()
         await this.page.waitForURL('**/pt/privacy-policy', { timeout: 10000 })
-        await this.assertVisible(this.homebrokerTitulo)
+        await this.assertVisible('Política de Privacidade')
 
         const listaPolitica = [
             `1. Introdução`,
