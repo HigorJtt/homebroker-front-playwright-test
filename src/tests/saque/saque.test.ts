@@ -1,10 +1,11 @@
 import test from '@playwright/test'
 
-import { usuarioDepositPix, usuarioInfluencer, usuarioChile } from '@/src/configs/massas'
+import { usuarioDepositPix, usuarioInfluencer, usuarioChile, usuarioColombia, usuarioMexico } from '@/src/configs/massas'
 import { SaqueInfluencerPage } from '@/src/pages/saque/saqueInfluencer'
 import { SaqueKhipuPage } from '@/src/pages/saque/saqueKhipu'
 import { SaquePixPage } from '@/src/pages/saque/saquePix'
 import { SaquePsePage } from '@/src/pages/saque/saquePse'
+import { SaqueSpeiPage } from '@/src/pages/saque/saqueSpei'
 
 test.describe('Saques', () => {
 
@@ -25,6 +26,11 @@ test.describe('Saques', () => {
 
     test('Validar tela de saque por "PSE"', async ({ page }) => {
         const saquePse = new SaquePsePage(page)
-        await saquePse.validarSaquePse(usuarioChile)
+        await saquePse.validarSaquePse(usuarioColombia)
+    })
+
+    test('Validar tela de saque por "SPEI"', async ({ page }) => {
+        const saqueSpei = new SaqueSpeiPage(page)
+        await saqueSpei.validarSaqueSpei(usuarioMexico)
     })
 })
