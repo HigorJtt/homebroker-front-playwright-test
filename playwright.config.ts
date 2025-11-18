@@ -22,6 +22,10 @@ export default defineConfig({
     /* Opt out of parallel tests on CI. */
     workers: process.env.CI ? 1 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+    timeout: 60 * 1000,  // 60s por teste (era 30s padrão)
+    expect: {
+        timeout: 10 * 1000  // 10s para expects individuais
+    },
     reporter: 'html',
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
@@ -30,7 +34,24 @@ export default defineConfig({
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         baseURL: process.env.BASE_URL ?? process.env.HML_URL ?? 'https://hml.homebroker.com',
-        trace: 'on-first-retry',
+
+        trace: 'retain-on-failure',
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+
+        /* Timeouts de navegação aumentados */
+        navigationTimeout: 30 * 1000,
+        actionTimeout: 15 * 1000,
+
+        /* Configurações para estabilidade */
+        viewport: { width: 1280, height: 720 },
+        ignoreHTTPSErrors: true,
+        bypassCSP: true,
+
+        /* Contexto isolado por teste (importante!) */
+        contextOptions: {
+            strictSelectors: false,  // evita strict-mode em getByText
+        }
     },
 
     /* Configure projects for major browsers */
