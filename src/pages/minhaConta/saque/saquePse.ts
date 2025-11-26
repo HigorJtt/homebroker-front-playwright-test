@@ -18,17 +18,18 @@ export class SaquePsePage {
     readonly botaoCancelar: Locator
 
     constructor(page: Page) {
-        /* Mapeamento da tela inicial do saque*/
         this.page = page
+        /*--- Mapeamento da tela inicial de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
         this.tituloCriptomoedas = page.getByText('Crypto').first()
         this.valorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
         this.valorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
+        /*--- Mapeamento da tela inicial de saque por PSE ---*/
         this.imgTransferenciaBancaria = page.getByAltText('Bank Transfer Icon')
         this.tituloTransferenciaBancaria = page.getByText('Transferencia bancaria', { exact: true })
         this.valorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*20(?:[.,]00)?/i).first()
         this.valorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
-        /* Mapeamento da tela de saque por PSE */
+        /*--- Mapeamento da tela de saque ---*/
         this.botaoRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
         this.botaoCancelar = this.page.getByText('Cancelar')
     }

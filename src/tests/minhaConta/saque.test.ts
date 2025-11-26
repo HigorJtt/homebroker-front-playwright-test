@@ -1,11 +1,11 @@
 import test from '@playwright/test'
 
 import { usuarioDepositPix, usuarioInfluencer, usuarioChile, usuarioColombia, usuarioMexico } from '@/src/configs/massas'
-import { SaqueInfluencerPage } from '@/src/pages/saque/saqueInfluencer'
-import { SaqueKhipuPage } from '@/src/pages/saque/saqueKhipu'
-import { SaquePixPage } from '@/src/pages/saque/saquePix'
-import { SaquePsePage } from '@/src/pages/saque/saquePse'
-import { SaqueSpeiPage } from '@/src/pages/saque/saqueSpei'
+import { SaqueInfluencerPage } from '@/src/pages/minhaConta/saque/saqueInfluencer'
+import { SaqueKhipuPage } from '@/src/pages/minhaConta/saque/saqueKhipu'
+import { SaquePixPage } from '@/src/pages/minhaConta/saque/saquePix'
+import { SaquePsePage } from '@/src/pages/minhaConta/saque/saquePse'
+import { SaqueSpeiPage } from '@/src/pages/minhaConta/saque/saqueSpei'
 
 test.describe('Saques', () => {
 

@@ -10,6 +10,8 @@ export class SaqueSpeiPage {
     readonly valorlimiteDiarioCriptomoedas: Locator
     readonly valorMinimoCriptomoedas: Locator
     readonly valorMaximoCriptomoedas: Locator
+    readonly imgOxxo: Locator
+    readonly tituloOxxo: Locator
     readonly imgTransferenciaBancaria: Locator
     readonly tituloTransferenciaBancaria: Locator
     readonly valorMinimoTransferenciaBancaria: Locator
@@ -18,17 +20,21 @@ export class SaqueSpeiPage {
     readonly botaoCancelar: Locator
 
     constructor(page: Page) {
-        /* Mapeamento da tela inicial do saque*/
         this.page = page
+        /*--- Mapeamento da tela de saque por OXXO ---*/
+        this.imgOxxo = this.page.getByAltText('OXXO Icon')
+        this.tituloOxxo = this.page.getByText('OXXO').first()
+        /*--- Mapeamento da tela de saque por SPEI ---*/
         this.imgTransferenciaBancaria = page.getByAltText('SPEI Icon')
         this.tituloTransferenciaBancaria = page.getByText('SPEI', { exact: true })
         this.valorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:MX\$|\$)?\s*200(?:[.,]00)?/i).first()
         this.valorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:MX\$|\$)?\s*20[\d\.,\s]*000(?:[.,]00)?/i).first()
-        /* Mapeamento da tela de saque por PSE */
+        /*--- Mapeamento da tela de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
         this.tituloCriptomoedas = page.getByText('Crypto').first()
         this.valorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
         this.valorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
+        /*--- Mapeamento da tela de saque ---*/
         this.botaoRevisarSaque = this.page.getByText('Revisar saque')
         this.botaoCancelar = this.page.getByText('Cancelar')
     }
@@ -74,6 +80,11 @@ export class SaqueSpeiPage {
 
         const transferenciaBancaria = this.page.getByRole('button', { name: /SPEI/i })
         await expect(transferenciaBancaria.getByText('Limite diário de saques: 100', { exact: true })).toBeVisible()
+
+        await this.assertNotVisible(
+            this.imgOxxo,
+            this.tituloOxxo
+        )
 
         await this.tituloTransferenciaBancaria.click()
 

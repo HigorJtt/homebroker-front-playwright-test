@@ -158,12 +158,12 @@ export class DepositoInfluencerPage {
         }
 
         for (const { step, name } of listaStepsPagamentos) {
-            // buscar o step apenas quando ele aparecer no início do texto (ex.: "1." no começo)
+            /* ---  buscar o step apenas quando ele aparecer no início do texto (ex.: "1." no começo) ---*/
             const escapedStep = step.replace(/\./g, '\\.')
             const stepRegex = new RegExp(`^\\s*${escapedStep}`)
             const stepLocator = this.page.getByText(stepRegex)
 
-            // criar regex tolerante para o texto do passo (escapa caracteres especiais e aceita variações de espaço/pontuação)
+            /* ---  criar regex tolerante para o texto do passo (escapa caracteres especiais e aceita variações de espaço/pontuação) ---*/
             const nameRegex = new RegExp(escapeForRegex(name), 'i')
             const nameLocator = this.page.getByText(nameRegex)
 

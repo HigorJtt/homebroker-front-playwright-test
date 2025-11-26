@@ -15,11 +15,7 @@ export class MinhaConta {
 
     constructor(page: Page) {
         this.page = page
-        this.menuMinhaConta = this.page.getByText('Minha conta')
-        this.secaoSaques = this.page.getByText('Saques')
-        this.secaoPerfil = this.page.getByText('Perfil')
-        this.secaoConfiguracoes = this.page.getByText('Configurações')
-        this.secaoVisaoGeral = this.page.getByText('Visão Geral')
+        this.menuMinhaConta = this.page.getByText('Minha Conta').first()
         this.programaVip = this.page.getByText('Vantagens e bônus especiais')
     }
 
@@ -34,18 +30,14 @@ export class MinhaConta {
         const login = new Login(this.page)
         await login.navigationLogin(creds)
 
-        await this.page.waitForTimeout(5000)
-        if (await this.programaVip.isVisible()) {
-            this.page.getByText('Não mostrar novamente').click()
-        }
         await this.menuMinhaConta.click()
         await this.page.waitForTimeout(5000)
 
         await this.assertVisible(
-            this.secaoSaques,
-            this.secaoPerfil,
-            this.secaoConfiguracoes,
-            this.secaoVisaoGeral
+            'Saques',
+            'Perfil',
+            'Configurações',
+            'Visão Geral'
         )
     }
 }

@@ -15,16 +15,15 @@ export class SaqueInfluencerPage {
 
     constructor(page: Page) {
         this.page = page
-        /* Mapeamento da tela inicial de saque */
+        /*--- Mapeamento da tela inicial de saque por PIX ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
         this.tituloPix = page.getByText('PIX')
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
-        /* Mapeamento da tela inicial de saque por PIX */
+        /*--- Mapeamento da tela de saque ---*/
         this.botaoRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
         this.botaoCancelar = this.page.getByText('Cancelar')
-        /* Mapeamento da tela de revise sua solicitação */
+        /*--- Mapeamento da tela de revise sua solicitação ---*/
         this.botaoConfirmarRetirada = this.page.getByRole('button', { name: 'Confirmar retirada' })
-
     }
 
     async abrirSaquePix(creds: CredenciaisLogin) {

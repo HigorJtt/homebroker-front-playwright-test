@@ -30,7 +30,7 @@ export const usuarioDepositPix: CredenciaisLogin = {
 }
 
 export const usuarioPerfil: CredenciaisLogin = {
-    email: 'higor-6553@gmail.com',
+    email: 'perfil345@gmail.com',
     senha: 'senha@123'
 }
 

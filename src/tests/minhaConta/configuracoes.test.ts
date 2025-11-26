@@ -9,72 +9,72 @@ import { AlterarSenhaPage } from '@/src/pages/minhaConta/configuracoes/alterarSe
 import { AutenticacaoDoisFatoresPage } from '@/src/pages/minhaConta/configuracoes/autenticacaoDoisFatores'
 import { TermosCondicoesPage } from '@/src/pages/minhaConta/configuracoes/termosCondicoes'
 import { PoliticaPrivacidadePage } from '@/src/pages/minhaConta/configuracoes/politicaPrivacidade'
-import { usuariosLogin } from '@/src/configs/massas'
+import { usuarioDepositPix } from '@/src/configs/massas'
 
 test.describe('Configurações', () => {
 
     test('Validar tela de "Configurações"', async ({ page }) => {
 
         const configuracoes = new ConfiguracoesPage(page)
-        await configuracoes.validarConfiguracoes(usuariosLogin.login)
+        await configuracoes.validarConfiguracoes(usuarioDepositPix)
     })
 
     test('Validar tela de "Idioma"', async ({ page }) => {
 
         const idioma = new IdiomaPage(page)
-        await idioma.validarIdioma(usuariosLogin.login)
+        await idioma.validarIdioma(usuarioDepositPix)
     })
 
     test('Validar tela de "ProTrader"', async ({ page }) => {
 
         const proTrader = new ProTraderPage(page)
-        await proTrader.validarProTrader(usuariosLogin.login)
+        await proTrader.validarProTrader(usuarioDepositPix)
     })
 
     test('Validar tela de "Som"', async ({ page }) => {
 
         const sons = new SomPage(page)
-        await sons.validarSom(usuariosLogin.login)
+        await sons.validarSom(usuarioDepositPix)
     })
 
     test('Validar tela de "Desempenho"', async ({ page }) => {
 
         const desempenho = new DesempenhoPage(page)
-        await desempenho.validarDesempenho(usuariosLogin.login)
+        await desempenho.validarDesempenho(usuarioDepositPix)
     })
 
     test('Validar tela de "Alterar Senha"', async ({ page }) => {
         const alterarSenha = new AlterarSenhaPage(page)
-        await alterarSenha.validarAlterarSenha(usuariosLogin.login)
+        await alterarSenha.validarAlterarSenha(usuarioDepositPix)
     })
 
     test('Validar mensagem informativa da de senha obrigária na tela de "Alterar senha"', async ({ page }) => {
         const alterarSenha = new AlterarSenhaPage(page)
-        await alterarSenha.validarMensagensInformativaSenhaObrigatoria(usuariosLogin.login)
+        await alterarSenha.validarMensagensInformativaSenhaObrigatoria(usuarioDepositPix)
     })
 
     test('Validar mensagem informativa de senhas diferentes na tela de "Alterar senha"', async ({ page }) => {
         const alterarSenha = new AlterarSenhaPage(page)
-        await alterarSenha.validarMensagemInformativaConfirmeSuaSenha(usuariosLogin.login)
+        await alterarSenha.validarMensagemInformativaConfirmeSuaSenha(usuarioDepositPix)
     })
 
     test('Validar alteração de senha na tela de "Alterar senha"', async ({ page }) => {
         const alterarSenha = new AlterarSenhaPage(page)
-        await alterarSenha.validarMensagemSenhaAlterada(usuariosLogin.login)
+        await alterarSenha.validarMensagemSenhaAlterada(usuarioDepositPix)
     })
 
     test('Validar tela de "Autenticação de dois fatores (2FA)"', async ({ page }) => {
         const autenticacaoDoisFatores = new AutenticacaoDoisFatoresPage(page)
-        await autenticacaoDoisFatores.validarAutenticacaoDoisFatores(usuariosLogin.login)
+        await autenticacaoDoisFatores.validarAutenticacaoDoisFatores(usuarioDepositPix)
     })
 
     test('Validar tela de "Termos e condições"', async ({ page }) => {
         const termosCondicoes = new TermosCondicoesPage(page)
-        await termosCondicoes.validarTermosCondicoes(usuariosLogin.login)
+        await termosCondicoes.validarTermosCondicoes(usuarioDepositPix)
     })
 
     test('Validar tela de "Política de privacidade"', async ({ page }) => {
         const politicaPrivacidade = new PoliticaPrivacidadePage(page)
-        await politicaPrivacidade.validarPoliticaPrivacidade(usuariosLogin.login)
+        await politicaPrivacidade.validarPoliticaPrivacidade(usuarioDepositPix)
     })
 })

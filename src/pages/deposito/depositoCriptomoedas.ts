@@ -194,11 +194,11 @@ export class DepositoCriptomoedasPage {
         ]
 
         for (const { imagem, nome, sigla } of listaCriptomoedas) {
-            // pegar a primeira imagem com o alt (evita "strict mode violation" quando há múltiplas)
+            /* ---  pegar a primeira imagem com o alt (evita "strict mode violation" quando há múltiplas) ---*/
             const img = this.page.getByAltText(imagem, { exact: true }).first()
             await expect(img).toBeVisible({ timeout: 5000 })
 
-            // subir ao container/tile mais próximo e validar textos separadamente
+            /* ---  subir ao container/tile mais próximo e validar textos separadamente ---*/
             const tile = img.locator('xpath=ancestor::button|ancestor::label|ancestor::div').first()
             await expect(tile).toBeVisible({ timeout: 5000 })
 

@@ -21,18 +21,19 @@ export class SaquePixPage {
 
     constructor(page: Page) {
         this.page = page
-        /* Mapeamento da tela inicial de saque */
+        /*--- Mapeamento da tela inicial de saque por PIX ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
         this.tituloPix = page.getByText('PIX', { exact: true })
         this.valorMinimoPix = page.getByText('Valor mínimo por saque: R$50.00')
         this.valorMaximoPix = page.getByText('Valor máximo por saque: R$5,000.00')
+        /*--- Mapeamento da tela inicial de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
         this.valorMinimoCriptomoedas = page.getByText('Valor mínimo por saque: $2.00')
         this.valorMaximoCriptomoedas = page.getByText('Valor máximo por saque: $5,000')
-        /* Mapeamento da tela inicial de saque por PIX */
+        /*--- Mapeamento da tela de saque ---*/
         this.botaoRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
         this.botaoCancelar = this.page.getByText('Cancelar')
-        /* Mapeamento da tela de revise sua solicitação */
+        /*--- Mapeamento da tela de revise sua solicitação ---*/
         this.botaoConfirmarRetirada = this.page.getByRole('button', { name: 'Confirmar retirada' })
     }
 
