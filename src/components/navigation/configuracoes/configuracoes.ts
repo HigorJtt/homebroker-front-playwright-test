@@ -10,7 +10,7 @@ export class Configuracoes {
 
     constructor(page: Page) {
         this.page = page
-        this.header = this.page.getByText('Configurações')
+        this.header = this.page.getByText('Configurações').first()
     }
 
     private async assertVisible(...items: Array<string | Locator>) {

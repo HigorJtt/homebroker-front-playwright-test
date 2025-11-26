@@ -36,30 +36,17 @@ export class DepositoKhipuPage {
 
     constructor(page: Page) {
         this.page = page
-        /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
-        this.titulo = this.page.getByText('')
-        this.descricao = this.page.getByText('')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         this.tituloCriptomoeda = this.page.getByText('Criptomoeda').first()
-        this.valorMinimoCriptomoeda = this.page.getByText('')
-        this.descricaoCriptomoeda = this.page.getByText('')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Khipu" ---*/
         this.imgKhipu = this.page.getByAltText('Khipu Icon')
         this.tituloKhipu = this.page.getByText('Khipu').first()
-        this.valorMinimoKhipu = this.page.getByText('')
-        this.descricaoKhipu = this.page.getByText('')
-        this.descricaoImportante = this.page.getByText('')
         this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('')
-        this.escolhaValorDescricao = this.page.getByText('')
-        this.valorMinimoKhipuEscolhaValor = this.page.getByText('')
-        this.inserirCodigoTexto = this.page.getByText('')
         this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
         this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
         this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.termosCondicoesTexto = this.page.getByText('')
         this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
         /*--- Mapeamento da tela de "código de pagamento" ---*/
         this.codigoKhipuTexto = this.page.getByText('Finalize seu pagamento usando o link abaixo')
@@ -185,12 +172,12 @@ export class DepositoKhipuPage {
         }
 
         for (const { step, name } of listaStepsPagamentos) {
-            // buscar o step apenas quando ele aparecer no início do texto (ex.: "1." no começo)
+            /* ---  buscar o step apenas quando ele aparecer no início do texto (ex.: "1." no começo) --- */
             const escapedStep = step.replace(/\./g, '\\.')
             const stepRegex = new RegExp(`^\\s*${escapedStep}`)
             const stepLocator = this.page.getByText(stepRegex)
 
-            // criar regex tolerante para o texto do passo (escapa caracteres especiais e aceita variações de espaço/pontuação)
+            /* --- criar regex tolerante para o texto do passo (escapa caracteres especiais e aceita variações de espaço/pontuação) --- */
             const nameRegex = new RegExp(escapeForRegex(name), 'i')
             const nameLocator = this.page.getByText(nameRegex)
 
