@@ -19,10 +19,16 @@ export class MinhaConta {
         this.programaVip = this.page.getByText('Vantagens e bônus especiais')
     }
 
-    private async assertVisible(...items: Array<string | Locator>) {
+    private async assertVisible(...items: Array<string | Locator>): Promise<void> {
         for (const item of items) {
-            const locator = typeof item === 'string' ? this.page.getByText(item, { exact: true }) : item
-            await expect(locator).toBeVisible()
+            const locator = typeof item === 'string'
+                ? this.page.getByText(item, { exact: true }).first()
+                : item
+            const count = await locator.count()
+            if (count === 0) {
+                throw new Error(`Elemento não encontrado: ${typeof item === 'string' ? item : locator.toString()}`)
+            }
+            await expect(locator.first()).toBeVisible({ timeout: 10000 })
         }
     }
 
@@ -35,9 +41,15 @@ export class MinhaConta {
 
         await this.assertVisible(
             'Saques',
+            'Programa VIP',
             'Perfil',
+            'Acesse suas informações pessoais',
             'Configurações',
+            'Ajuste preferências, segurança e mais',
             'Visão Geral'
         )
+
+        await expect(this.page.getByText('Descubra os benefícios exclusivos do nosso Programa VIP', { exact: false }).first()).toBeVisible({ timeout: 10000 })
+
     }
 }

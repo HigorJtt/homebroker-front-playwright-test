@@ -24,6 +24,17 @@ export const usuariosLogin: Record<string, CredenciaisLogin> = {
     }
 }
 
+export const usuariosProgramaVip: Record<string, CredenciaisLogin> = {
+    usuarioStandard: {
+        email: 'higorProgramaVip@gmail.com',
+        senha: 'senha@123'
+    },
+    usuarioBlack: {
+        email: 'brenogrammeudo-5454@yopmail.com',
+        senha: 'senha@123'
+    }
+}
+
 export const usuarioDepositPix: CredenciaisLogin = {
     email: 'higor-pix@gmail.com',
     senha: 'senha@123'
