@@ -25,10 +25,16 @@ export class ConfiguracoesPage {
         return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
     }
 
-    private async assertVisible(...items: Array<string | Locator>) {
+    private async assertVisible(...items: Array<string | Locator>): Promise<void> {
         for (const item of items) {
-            const locator = typeof item === 'string' ? this.page.getByText(item, { exact: true }) : item
-            await expect(locator).toBeVisible()
+            const locator = typeof item === 'string'
+                ? this.page.getByText(item, { exact: true }).first()
+                : item
+            const count = await locator.count()
+            if (count === 0) {
+                throw new Error(`Elemento não encontrado: ${typeof item === 'string' ? item : locator.toString()}`)
+            }
+            await expect(locator.first()).toBeVisible({ timeout: 10000 })
         }
     }
 
