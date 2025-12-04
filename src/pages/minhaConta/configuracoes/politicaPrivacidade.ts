@@ -34,6 +34,7 @@ export class PoliticaPrivacidadePage {
         await this.abrirPoliticaPrivacidade(creds)
 
         await this.politicaPrivacidade.click()
+        await this.page.waitForTimeout(5000)
         await this.page.waitForURL('**/pt/privacy-policy', { timeout: 10000 })
         await this.assertVisible('Política de Privacidade')
 

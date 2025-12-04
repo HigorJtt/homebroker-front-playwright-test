@@ -6,37 +6,35 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class DepositoPage {
     readonly page: Page
     readonly imgPix: Locator
-    readonly tituloPix: Locator
+    readonly lblTituloPix: Locator
     readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoedas: Locator
-    readonly transacaoProtegidaTexto: Locator
-    readonly escolhaValorTitulo: Locator
-    readonly codigoCupomTexto: Locator
-    readonly placeholderCodigoCupom: Locator
-    readonly aplicarBotao: Locator
-    readonly codigoPixTexto: Locator
-    readonly botaoCopiarCodigoPix: Locator
-    readonly botaoCopiarCodigoPixCopiado: Locator
+    readonly lblTituloCriptomoedas: Locator
+    readonly lblTransacaoProtegida: Locator
+    readonly lblTituloescolhaValor: Locator
+    readonly lblCodigoCupomTexto: Locator
+    readonly inpPlaceholderCodigoCupom: Locator
+    readonly btnAplicar: Locator
+    readonly lblCodigoPix: Locator
+    readonly btnCopiarCodigoPix: Locator
     readonly imgQRCode: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
-        this.tituloPix = this.page.getByText('Pix').first()
+        this.lblTituloPix = this.page.getByText('Pix').first()
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
-        this.tituloCriptomoedas = this.page.getByText('Criptomoeda').first()
-        this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
+        this.lblTituloCriptomoedas = this.page.getByText('Criptomoeda').first()
+        this.lblTransacaoProtegida = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.codigoCupomTexto = this.page.getByLabel('Código do cupom')
-        this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
-        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
+        this.lblTituloescolhaValor = this.page.getByText('Escolha o valor')
+        this.lblCodigoCupomTexto = this.page.getByLabel('Código do cupom')
+        this.inpPlaceholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
+        this.btnAplicar = this.page.getByRole('button', { name: 'Aplicar' })
         /*--- Mapeamento da tela de "QR Code" ---*/
-        this.codigoPixTexto = this.page.getByText('Seu código pix')
-        this.botaoCopiarCodigoPix = this.page.getByRole('button', { name: 'Copiar código pix' })
-        this.botaoCopiarCodigoPixCopiado = this.page.getByRole('button', { name: 'Código PIX copiado!' })
+        this.lblCodigoPix = this.page.getByText('Seu código pix')
+        this.btnCopiarCodigoPix = this.page.getByRole('button', { name: 'Copiar código pix' })
         this.imgQRCode = this.page.locator('img[alt="QRcode"]')
     }
 
@@ -67,20 +65,20 @@ export class DepositoPage {
             'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
             this.imgPix,
-            this.tituloPix,
+            this.lblTituloPix,
             'Valor mínimo: R$60.00',
             'Depósitos por pix são processados em poucos minutos',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
-            this.tituloCriptomoedas,
+            this.lblTituloCriptomoedas,
             'Valor mínimo: 10 USDT',
             'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
             'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
-        await this.tituloPix.click()
-        await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
+        await this.lblTituloPix.click()
+        await expect(this.lblTituloescolhaValor).toBeVisible({ timeout: 10000 })
 
         await this.assertVisible(
             /*--- Mapeamento da tela de "Escolha o valor" ---*/
@@ -88,11 +86,11 @@ export class DepositoPage {
             this.imgPix,
             'Note que todos os valores estão em real',
             'Tem um código de cupom? Insira abaixo.',
-            this.codigoCupomTexto,
-            this.placeholderCodigoCupom,
-            this.aplicarBotao,
+            this.lblCodigoCupomTexto,
+            this.inpPlaceholderCodigoCupom,
+            this.btnAplicar,
             'Depósitos por pix são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
-            this.transacaoProtegidaTexto,
+            this.lblTransacaoProtegida,
         )
 
         await expect(this.page.getByText('Valor mínimo: R$60', { exact: true })).toBeVisible()
@@ -132,15 +130,15 @@ export class DepositoPage {
         await this.page.getByRole('button', { name: 'Depósito R$40,000.00' }).click()
 
         await Promise.all([
-            this.codigoPixTexto.waitFor({ timeout: 10000 })
+            this.lblCodigoPix.waitFor({ timeout: 10000 })
         ])
 
         await this.assertVisible(
             'R$40,000.00',
             'Lembramos que a conta onde será feito o depósito deverá estar cadastrada no mesmo CPF.',
-            this.botaoCopiarCodigoPix,
+            this.btnCopiarCodigoPix,
             'Voltar para Investir',
-            this.transacaoProtegidaTexto,
+            this.lblTransacaoProtegida,
             this.imgQRCode
         )
 

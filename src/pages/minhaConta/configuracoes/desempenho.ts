@@ -5,14 +5,14 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class DesempenhoPage {
     readonly page: Page
-    readonly voltarBotao: Locator
+    readonly lblDesempenho: Locator
+    readonly btnVoltar: Locator
     readonly alert: Locator
-    readonly desempenho: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.desempenho = this.page.getByText('Desempenho').first()
-        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
+        this.lblDesempenho = this.page.getByText('Desempenho').first()
+        this.btnVoltar = this.page.getByRole('button', { name: 'voltar' })
         this.alert = this.page.getByRole('alert')
     }
 
@@ -37,11 +37,15 @@ export class DesempenhoPage {
     async validarDesempenho(creds: CredenciaisLogin) {
         await this.abrirDesempenho(creds)
 
-        this.assertVisible(
+        await this.lblDesempenho.click()
+        await this.page.waitForTimeout(5000)
+
+        await this.assertVisible(
             'Modo Desempenho',
             'Ativar o modo desempenho melhora a performance do gráfico.',
+            this.btnVoltar
         )
-        await this.desempenho.click()
+
         await this.page.getByText('Ativar modo desempenho:').click()
         await expect(this.alert.filter({ hasText: 'Suas preferências de desempenho foram alteradas com sucesso.' })).toBeVisible({ timeout: 10000 })
         await this.page.waitForTimeout(2000)

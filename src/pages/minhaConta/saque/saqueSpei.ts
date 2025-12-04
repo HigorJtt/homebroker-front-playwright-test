@@ -5,38 +5,37 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class SaqueSpeiPage {
     readonly page: Page
-    readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoedas: Locator
-    readonly valorlimiteDiarioCriptomoedas: Locator
-    readonly valorMinimoCriptomoedas: Locator
-    readonly valorMaximoCriptomoedas: Locator
     readonly imgOxxo: Locator
-    readonly tituloOxxo: Locator
+    readonly lblTituloOxxo: Locator
     readonly imgTransferenciaBancaria: Locator
-    readonly tituloTransferenciaBancaria: Locator
-    readonly valorMinimoTransferenciaBancaria: Locator
-    readonly valorMaximoTransferenciaBancaria: Locator
-    readonly botaoRevisarSaque: Locator
-    readonly botaoCancelar: Locator
+    readonly lblTituloTransferenciaBancaria: Locator
+    readonly lblValorMinimoTransferenciaBancaria: Locator
+    readonly lblValorMaximoTransferenciaBancaria: Locator
+    readonly imgCriptomoedas: Locator
+    readonly lblTituloCriptomoedas: Locator
+    readonly lblValorMinimoCriptomoedas: Locator
+    readonly lblValorMaximoCriptomoedas: Locator
+    readonly btnRevisarSaque: Locator
+    readonly btnCancelar: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de saque por OXXO ---*/
         this.imgOxxo = this.page.getByAltText('OXXO Icon')
-        this.tituloOxxo = this.page.getByText('OXXO').first()
+        this.lblTituloOxxo = this.page.getByText('OXXO').first()
         /*--- Mapeamento da tela de saque por SPEI ---*/
         this.imgTransferenciaBancaria = page.getByAltText('SPEI Icon')
-        this.tituloTransferenciaBancaria = page.getByText('SPEI', { exact: true })
-        this.valorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:MX\$|\$)?\s*200(?:[.,]00)?/i).first()
-        this.valorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:MX\$|\$)?\s*20[\d\.,\s]*000(?:[.,]00)?/i).first()
+        this.lblTituloTransferenciaBancaria = page.getByText('SPEI', { exact: true })
+        this.lblValorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:MX\$|\$)?\s*200(?:[.,]00)?/i).first()
+        this.lblValorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:MX\$|\$)?\s*20[\d\.,\s]*000(?:[.,]00)?/i).first()
         /*--- Mapeamento da tela de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
-        this.tituloCriptomoedas = page.getByText('Crypto').first()
-        this.valorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
-        this.valorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
+        this.lblTituloCriptomoedas = page.getByText('Crypto').first()
+        this.lblValorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
+        this.lblValorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
         /*--- Mapeamento da tela de saque ---*/
-        this.botaoRevisarSaque = this.page.getByText('Revisar saque')
-        this.botaoCancelar = this.page.getByText('Cancelar')
+        this.btnRevisarSaque = this.page.getByText('Revisar saque')
+        this.btnCancelar = this.page.getByText('Cancelar')
     }
 
     async abrirSaqueSpei(creds: CredenciaisLogin) {
@@ -74,13 +73,13 @@ export class SaqueSpeiPage {
         await this.abrirSaqueSpei(creds)
         await this.assertVisible(
             this.imgCriptomoedas,
-            this.tituloCriptomoedas,
-            this.valorMinimoCriptomoedas,
-            this.valorMaximoCriptomoedas,
+            this.lblTituloCriptomoedas,
+            this.lblValorMinimoCriptomoedas,
+            this.lblValorMaximoCriptomoedas,
             this.imgTransferenciaBancaria,
-            this.tituloTransferenciaBancaria,
-            this.valorMinimoTransferenciaBancaria,
-            this.valorMaximoTransferenciaBancaria
+            this.lblTituloTransferenciaBancaria,
+            this.lblValorMinimoTransferenciaBancaria,
+            this.lblValorMaximoTransferenciaBancaria
         )
 
         const crypto = this.page.getByRole('button', { name: /Crypto/i })
@@ -91,10 +90,10 @@ export class SaqueSpeiPage {
 
         await this.assertNotVisible(
             this.imgOxxo,
-            this.tituloOxxo
+            this.lblTituloOxxo
         )
 
-        await this.tituloTransferenciaBancaria.click()
+        await this.lblTituloTransferenciaBancaria.click()
 
         await expect(this.page.getByText('O saque será feito para o código SPEI associado ao CURP', { exact: false }).first()).toBeVisible({ timeout: 10000 })
         await expect(this.page.getByText('que foi validado durante o processo de verificação da conta. Observe que todos os valores estão em pesos mexicanos.', { exact: false }).first()).toBeVisible({ timeout: 10000 })
@@ -113,9 +112,9 @@ export class SaqueSpeiPage {
         const valorInput = this.page.locator('#outlined-basic').first()
         await expect(valorInput).toBeVisible({ timeout: 5000 })
         await valorInput.fill('20000')
-        await expect(this.botaoCancelar).toBeVisible()
+        await expect(this.btnCancelar).toBeVisible()
 
-        await this.botaoRevisarSaque.click()
+        await this.btnRevisarSaque.click()
 
         await this.assertVisible(
             /* Mapeamento da modal de dados bancários */

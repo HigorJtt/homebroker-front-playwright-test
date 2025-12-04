@@ -5,16 +5,16 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class IdiomaPage {
     readonly page: Page
-    readonly voltarBotao: Locator
-    readonly salvarBotao: Locator
-    readonly comboIdioma: Locator
+    readonly btnVoltar: Locator
+    readonly selectIdioma: Locator
+    readonly btnSalvar: Locator
     readonly alert: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
-        this.comboIdioma = this.page.getByRole('combobox', { name: 'Selecione o idioma' })
-        this.salvarBotao = this.page.getByRole('button', { name: 'Salvar' })
+        this.btnVoltar = this.page.getByRole('button', { name: 'voltar' })
+        this.selectIdioma = this.page.getByRole('combobox', { name: 'Selecione o idioma' })
+        this.btnSalvar = this.page.getByRole('button', { name: 'Salvar' })
         this.alert = this.page.getByRole('alert')
     }
 
@@ -42,15 +42,15 @@ export class IdiomaPage {
 
         await this.page.getByText('Alterar sua preferência de idioma').click()
         await this.assertVisible('Alterar idioma', 'Português')
-        await this.assertVisible(this.voltarBotao, this.salvarBotao)
-        await this.comboIdioma.click()
+        await this.assertVisible(this.btnVoltar, this.btnSalvar)
+        await this.selectIdioma.click()
 
         for (const idioma of idiomas) {
             await expect(this.page.getByRole('option', { name: idioma })).toBeVisible()
         }
 
         await this.page.getByRole('option', { name: 'EN English' }).click()
-        await this.salvarBotao.click()
+        await this.btnSalvar.click()
         await this.page.waitForTimeout(1000)
         await expect(this.alert.filter({ hasText: 'Seu idioma foi alterado com sucesso.' })).toBeVisible({ timeout: 10000 })
         await this.assertVisible('Change language', 'English')

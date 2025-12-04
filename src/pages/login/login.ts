@@ -5,33 +5,21 @@ import { Login } from '@/src/components/navigation/login/login'
 
 export class LoginPage {
     readonly page: Page
-    readonly email: Locator
-    readonly senha: Locator
-    readonly forgotPassword: Locator
-    readonly titulo: Locator
-    readonly descricao: Locator
-    readonly loginBotao: Locator
-    readonly googleBotao: Locator
-    readonly criarContaLink: Locator
-    readonly confirmarIdadeTexto: Locator
-    readonly termosLink: Locator
-    readonly exemptionTitle: Locator
-    readonly exemploParagrafo: Locator
+    readonly inpEmail: Locator
+    readonly inpSenha: Locator
+    readonly bntLoginBotao: Locator
+    readonly btnGoogle: Locator
+    readonly lnkTermos: Locator
+    readonly lblExemploParagrafo: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.email = this.page.locator('input[type="email"]')
-        this.senha = this.page.locator('input[type="password"]')
-        this.forgotPassword = this.page.getByText('Esqueci minha senha')
-        this.titulo = this.page.getByText('Iniciar sessão').first()
-        this.descricao = this.page.getByText('Insira login e senha para acessar sua conta')
-        this.loginBotao = this.page.getByRole('button', { name: 'Iniciar sessão' })
-        this.googleBotao = this.page.getByRole('button', { name: /Entrar com o Google/i })
-        this.criarContaLink = this.page.getByText('Criar uma conta agora')
-        this.confirmarIdadeTexto = this.page.getByText('Confirmo que tenho pelo menos 18 anos')
-        this.termosLink = this.page.getByText(/Termos e Condições/i)
-        this.exemptionTitle = this.page.getByText('Isenção')
-        this.exemploParagrafo = this.page.getByText(/HomeBroker não está autorizada pela Comissão de Valores Mobiliários/i)
+        this.inpEmail = this.page.locator('input[type="email"]')
+        this.inpSenha = this.page.locator('input[type="password"]')
+        this.bntLoginBotao = this.page.getByRole('button', { name: 'Iniciar sessão' })
+        this.btnGoogle = this.page.getByRole('button', { name: /Entrar com o Google/i })
+        this.lnkTermos = this.page.getByText(/Termos e Condições/i)
+        this.lblExemploParagrafo = this.page.getByText(/HomeBroker não está autorizada pela Comissão de Valores Mobiliários/i)
     }
 
     async abrirLogin(creds?: CredenciaisLogin, url?: string) {
@@ -63,29 +51,32 @@ export class LoginPage {
 
         await expect(this.page.getByText('E-mail').first()).toBeVisible()
         await expect(this.page.getByText('Senha').first()).toBeVisible()
-        await this.assertVisible(this.titulo, this.descricao)
+        await this.assertVisible(
+            'Iniciar sessão',
+            'Insira login e senha para acessar sua conta',
+        )
 
         await Promise.all([
-            expect(this.email).toHaveAttribute('placeholder', 'Digite seu e-mail'),
-            expect(this.senha).toHaveAttribute('placeholder', 'Digite sua senha')
+            expect(this.inpEmail).toHaveAttribute('placeholder', 'Digite seu e-mail'),
+            expect(this.inpSenha).toHaveAttribute('placeholder', 'Digite sua senha')
         ])
 
         await this.assertVisible(
-            this.loginBotao,
-            this.googleBotao,
-            this.forgotPassword,
-            this.criarContaLink,
-            this.confirmarIdadeTexto,
-            this.termosLink,
-            this.exemptionTitle,
-            this.exemploParagrafo
+            this.bntLoginBotao,
+            this.btnGoogle,
+            'Esqueci minha senha',
+            'Criar uma conta agora',
+            'Confirmo que tenho pelo menos 18 anos',
+            this.lnkTermos,
+            'Isenção',
+            this.lblExemploParagrafo
         )
     }
 
     async validarMensagemInformativaEmailSenha() {
         await this.abrirLogin()
 
-        await this.loginBotao.click()
+        await this.bntLoginBotao.click()
         await this.assertVisible('Digite seu e-mail', 'A senha é obrigatória')
     }
 
@@ -95,9 +86,9 @@ export class LoginPage {
         await expect(this.page).toHaveTitle('Home Broker')
         await this.page.waitForTimeout(5000)
 
-        await this.email.fill(creds.email)
-        await this.senha.fill(creds.senha)
-        await this.loginBotao.click()
+        await this.inpEmail.fill(creds.email)
+        await this.inpSenha.fill(creds.senha)
+        await this.bntLoginBotao.click()
         await this.assertVisible('Usuario ou senha incorretos.')
     }
 }

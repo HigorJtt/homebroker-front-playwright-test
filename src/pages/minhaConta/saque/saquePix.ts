@@ -6,35 +6,32 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class SaquePixPage {
     readonly page: Page
     readonly imgPix: Locator
-    readonly tituloPix: Locator
-    readonly valorlimiteDiarioPix: Locator
-    readonly valorMinimoPix: Locator
-    readonly valorMaximoPix: Locator
+    readonly lblTituloPix: Locator
+    readonly lblValorMinimoPix: Locator
+    readonly lblValorMaximoPix: Locator
     readonly imgCriptomoedas: Locator
-    readonly valorlimiteDiarioCriptomoedas: Locator
-    readonly valorMinimoCriptomoedas: Locator
-    readonly valorMaximoCriptomoedas: Locator
-    readonly tituloValorSaque: Locator
-    readonly botaoRevisarSaque: Locator
-    readonly botaoCancelar: Locator
-    readonly botaoConfirmarRetirada: Locator
+    readonly lblValorMinimoCriptomoedas: Locator
+    readonly lblValorMaximoCriptomoedas: Locator
+    readonly btnRevisarSaque: Locator
+    readonly btnCancelar: Locator
+    readonly btnConfirmarRetirada: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela inicial de saque por PIX ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
-        this.tituloPix = page.getByText('PIX', { exact: true })
-        this.valorMinimoPix = page.getByText('Valor mínimo por saque: R$50.00')
-        this.valorMaximoPix = page.getByText('Valor máximo por saque: R$5,000.00')
+        this.lblTituloPix = page.getByText('PIX', { exact: true })
+        this.lblValorMinimoPix = page.getByText('Valor mínimo por saque: R$50.00')
+        this.lblValorMaximoPix = page.getByText('Valor máximo por saque: R$5,000.00')
         /*--- Mapeamento da tela inicial de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
-        this.valorMinimoCriptomoedas = page.getByText('Valor mínimo por saque: $2.00')
-        this.valorMaximoCriptomoedas = page.getByText('Valor máximo por saque: $5,000')
+        this.lblValorMinimoCriptomoedas = page.getByText('Valor mínimo por saque: $2.00')
+        this.lblValorMaximoCriptomoedas = page.getByText('Valor máximo por saque: $5,000')
         /*--- Mapeamento da tela de saque ---*/
-        this.botaoRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
-        this.botaoCancelar = this.page.getByText('Cancelar')
+        this.btnRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
+        this.btnCancelar = this.page.getByText('Cancelar')
         /*--- Mapeamento da tela de revise sua solicitação ---*/
-        this.botaoConfirmarRetirada = this.page.getByRole('button', { name: 'Confirmar retirada' })
+        this.btnConfirmarRetirada = this.page.getByRole('button', { name: 'Confirmar retirada' })
     }
 
     async abrirSaquePix(creds: CredenciaisLogin) {
@@ -59,13 +56,13 @@ export class SaquePixPage {
         await this.abrirSaquePix(creds)
         await this.assertVisible(
             this.imgPix,
-            this.tituloPix,
-            this.valorMinimoPix,
-            this.valorMaximoPix,
+            this.lblTituloPix,
+            this.lblValorMinimoPix,
+            this.lblValorMaximoPix,
             this.imgCriptomoedas,
             'Crypto',
-            this.valorMinimoCriptomoedas,
-            this.valorMaximoCriptomoedas
+            this.lblValorMinimoCriptomoedas,
+            this.lblValorMaximoCriptomoedas
         )
 
         const pix = this.page.getByRole('button', { name: /PIX/i })
@@ -74,7 +71,7 @@ export class SaquePixPage {
         const crypto = this.page.getByRole('button', { name: /Crypto/i })
         await expect(crypto.getByText('Limite diário de saques: 100')).toBeVisible()
 
-        await this.tituloPix.click()
+        await this.lblTituloPix.click()
         const saqueValorTextoUm = /^O depósito será feito na conta com a chave pix associada ao CPF\b[\s\S]*/i
         await expect(this.page.getByText(saqueValorTextoUm).first()).toBeVisible({ timeout: 10000 })
 
@@ -94,8 +91,8 @@ export class SaquePixPage {
         await expect(valorInput).toBeVisible({ timeout: 5000 })
 
         await valorInput.fill('10000')
-        await expect(this.botaoCancelar).toBeVisible()
-        await this.botaoRevisarSaque.click()
+        await expect(this.btnCancelar).toBeVisible()
+        await this.btnRevisarSaque.click()
 
         await this.assertVisible(
             'Revise sua solicitação',
