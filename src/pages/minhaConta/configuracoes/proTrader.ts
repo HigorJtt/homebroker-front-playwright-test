@@ -5,19 +5,19 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class ProTraderPage {
     readonly page: Page
-    readonly voltarBotao: Locator
-    readonly proTraderTexto: Locator
-    readonly proTraderImg: Locator
-    readonly proTraderBotao: Locator
-    readonly proTraderCheckbox: Locator
+    readonly btnVoltar: Locator
+    readonly lblProTrader: Locator
+    readonly imgProTrader: Locator
+    readonly btnProTrader: Locator
+    readonly selectProTrader: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.proTraderTexto = this.page.getByText('ProTrader').first()
-        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
-        this.proTraderImg = this.page.getByRole('img', { name: 'ProTrader', exact: true })
-        this.proTraderBotao = this.page.getByRole('button', { name: 'ProTrader' })
-        this.proTraderCheckbox = this.page.getByLabel('controlled')
+        this.btnVoltar = this.page.getByRole('button', { name: 'voltar' })
+        this.lblProTrader = this.page.getByText('ProTrader').first()
+        this.imgProTrader = this.page.getByRole('img', { name: 'ProTrader', exact: true })
+        this.btnProTrader = this.page.getByRole('button', { name: 'ProTrader' })
+        this.selectProTrader = this.page.getByLabel('controlled')
     }
 
     async abrirProTrader(creds: CredenciaisLogin) {
@@ -41,21 +41,24 @@ export class ProTraderPage {
     async validarProTrader(creds: CredenciaisLogin) {
         await this.abrirProTrader(creds)
 
-        await this.assertVisible(this.voltarBotao)
-        await expect(this.proTraderTexto).toBeVisible()
+        await this.lblProTrader.click()
+        await this.page.waitForTimeout(5000)
+
+        await this.assertVisible(this.btnVoltar)
+        await expect(this.lblProTrader).toBeVisible()
         await this.page.getByText('Ativar ou desativar o ProTrader').click()
-        await expect(this.proTraderImg).toBeVisible()
+        await expect(this.imgProTrader).toBeVisible()
         await this.assertVisible('O que você obtém com o ProTrader')
         await expect(this.page.getByText('A visão ProTrader foi projetada para traders prontos para elevar seu nível. Acesse ferramentas, recursos e insights avançados para negociar de forma mais inteligente. Veja a tabela abaixo para comparar a visão Simples e a visão ProTrader.')).toBeVisible()
 
-        if (await this.proTraderCheckbox.isChecked()) {
-            await this.proTraderImg.first().isVisible()
-            await this.proTraderCheckbox.uncheck()
-            await this.proTraderBotao.isVisible()
+        if (await this.selectProTrader.isChecked()) {
+            await this.imgProTrader.first().isVisible()
+            await this.selectProTrader.uncheck()
+            await this.btnProTrader.isVisible()
         } else {
-            await this.proTraderBotao.isVisible()
-            await this.proTraderCheckbox.check()
-            await this.proTraderImg.first().isVisible()
+            await this.btnProTrader.isVisible()
+            await this.selectProTrader.check()
+            await this.imgProTrader.first().isVisible()
         }
     }
 }

@@ -5,32 +5,29 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class DepositoOxxoPage {
     readonly page: Page
-    readonly titulo: Locator
     readonly imgCriptomoedas: Locator
     readonly imgSpei: Locator
     readonly imgOxxo: Locator
-    readonly tituloOxxo: Locator
-    readonly placeholderCodigoCupom: Locator
-    readonly aplicarBotao: Locator
-    readonly transacaoProtegidaTexto: Locator
-    readonly redirecionamentoTexto: Locator
+    readonly lblTituloOxxo: Locator
+    readonly inpPlaceholderCodigoCupom: Locator
+    readonly btnAplicar: Locator
+    readonly lblTransacaoProtegida: Locator
+    readonly lblRedirecionamento: Locator
 
     constructor(page: Page) {
         this.page = page
-        /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
-        this.titulo = this.page.getByText('Selecione o tipo de depósito')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Spei" ---*/
         this.imgSpei = this.page.getByAltText('SPEI Icon')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - OXXO" ---*/
         this.imgOxxo = this.page.getByAltText('OXXO Icon')
-        this.tituloOxxo = this.page.getByText('OXXO').first()
+        this.lblTituloOxxo = this.page.getByText('OXXO').first()
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
-        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
-        this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
+        this.inpPlaceholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
+        this.btnAplicar = this.page.getByRole('button', { name: 'Aplicar' })
+        this.lblTransacaoProtegida = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
+        this.lblRedirecionamento = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -66,7 +63,8 @@ export class DepositoOxxoPage {
         await this.abrirDeposito(creds)
 
         await this.assertVisible(
-            this.titulo,
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
+            'Selecione o tipo de depósito',
             'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
@@ -79,10 +77,10 @@ export class DepositoOxxoPage {
             '90% dos depósitos por SPEI são processados em poucos minutos',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - OXXO" ---*/
             this.imgOxxo,
-            this.tituloOxxo,
+            this.lblTituloOxxo,
             'Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis',
             'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
         const spei = this.page.getByRole('link', { name: /SPEI/i })
@@ -91,7 +89,7 @@ export class DepositoOxxoPage {
         const oxxo = this.page.getByRole('link', { name: /OXXO/i })
         await expect(oxxo.getByText('Valor mínimo: MX$200.00')).toBeVisible()
 
-        await this.tituloOxxo.click()
+        await this.lblTituloOxxo.click()
 
         await this.assertVisible(
             /*--- Mapeamento da tela de "Escolha o valor" ---*/
@@ -99,8 +97,8 @@ export class DepositoOxxoPage {
             this.imgOxxo,
             'Note que todos os valores estão em peso mexicano',
             'Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis. Ao continuar, concordo com os Termos e condições.',
-            this.transacaoProtegidaTexto,
-            this.redirecionamentoTexto
+            this.lblTransacaoProtegida,
+            this.lblRedirecionamento
         )
 
         await expect(this.page.getByText('Valor mínimo: MX$200', { exact: true })).toBeVisible()
@@ -139,9 +137,9 @@ export class DepositoOxxoPage {
 
         await this.assertNotVisible(
             'Tem um código de cupom? Insira abaixo.',
-            this.placeholderCodigoCupom,
+            this.inpPlaceholderCodigoCupom,
             'Código do cupom',
-            this.aplicarBotao
+            this.btnAplicar
         )
 
         expect(this.page.getByRole('button', { name: 'MX$200' }))

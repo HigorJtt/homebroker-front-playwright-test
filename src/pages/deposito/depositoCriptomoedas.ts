@@ -6,34 +6,30 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class DepositoCriptomoedasPage {
     readonly page: Page
     readonly imgPix: Locator
-    readonly tituloPix: Locator
     readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoedas: Locator
-    readonly transacaoProtegidaTexto: Locator
-    readonly escolhaValorTitulo: Locator
-    readonly valorMinimoCriptomoedasEscolhaValor: Locator
-    readonly placeholderCodigoCupom: Locator
-    readonly aplicarBotao: Locator
-    readonly selecioneCriptomoedaTitulo: Locator
-    readonly selecioneCriptomoedaDescricao: Locator
+    readonly lblTituloCriptomoedas: Locator
+    readonly lblTransacaoProtegida: Locator
+    readonly lblTituloEscolhaValor: Locator
+    readonly inpPlaceholderCodigoCupom: Locator
+    readonly btnAplicar: Locator
+    readonly lblTituloSelecioneCriptomoeda: Locator
+    readonly lblSelecioneCriptomoedaDescricao: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
         this.imgPix = this.page.locator('div', { hasText: 'PIX' }).locator('svg').first()
-        this.tituloPix = this.page.getByText('Pix').first()
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
-        this.tituloCriptomoedas = this.page.getByText('Criptomoeda').first()
-        this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
+        this.lblTituloCriptomoedas = this.page.getByText('Criptomoeda').first()
+        this.lblTransacaoProtegida = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.valorMinimoCriptomoedasEscolhaValor = this.page.getByText('')
-        this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
-        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
+        this.lblTituloEscolhaValor = this.page.getByText('Escolha o valor')
+        this.inpPlaceholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
+        this.btnAplicar = this.page.getByRole('button', { name: 'Aplicar' })
         /*--- Mapeamento da tela de "Selecione sua criptomoeda" ---*/
-        this.selecioneCriptomoedaTitulo = this.page.getByText('Selecione sua criptomoeda')
-        this.selecioneCriptomoedaDescricao = this.page.getByText('Selecione um dos ativos disponíveis para fazer o depósito.')
+        this.lblTituloSelecioneCriptomoeda = this.page.getByText('Selecione sua criptomoeda')
+        this.lblSelecioneCriptomoedaDescricao = this.page.getByText('Selecione um dos ativos disponíveis para fazer o depósito.')
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -74,29 +70,29 @@ export class DepositoCriptomoedasPage {
             'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Pix" ---*/
             this.imgPix,
-            this.tituloPix,
+            'Pix',
             'Valor mínimo: R$60.00',
             'Depósitos por pix são processados em poucos minutos',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
-            this.tituloCriptomoedas,
+            this.lblTituloCriptomoedas,
             'Valor mínimo: 10 USDT',
             'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
             'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
-        await this.tituloCriptomoedas.click()
-        await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
+        await this.lblTituloCriptomoedas.click()
+        await expect(this.lblTituloEscolhaValor).toBeVisible({ timeout: 10000 })
 
         await this.assertVisible(
             /*--- Mapeamento da tela de "Escolha o valor" ---*/
-            this.escolhaValorTitulo,
+            this.lblTituloEscolhaValor,
             this.imgCriptomoedas,
             'Observe que todos os valores estão em dólares americanos (USD).',
             'Valor mínimo: $10',
             'Depósitos em criptomoedas são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
         const listaValores = [
@@ -133,17 +129,17 @@ export class DepositoCriptomoedasPage {
 
         await this.assertNotVisible(
             'Tem um código de cupom? Insira abaixo.',
-            this.placeholderCodigoCupom,
+            this.inpPlaceholderCodigoCupom,
             'Código do cupom',
-            this.aplicarBotao
+            this.btnAplicar
         )
 
         await this.page.getByRole('button', { name: '$50', exact: true }).click()
         await this.page.getByRole('button', { name: 'Depósito $50.00', exact: true }).click()
 
         await Promise.all([
-            this.selecioneCriptomoedaTitulo.waitFor({ timeout: 10000 }),
-            this.selecioneCriptomoedaDescricao.waitFor({ timeout: 10000 })
+            this.lblTituloSelecioneCriptomoeda.waitFor({ timeout: 10000 }),
+            this.lblSelecioneCriptomoedaDescricao.waitFor({ timeout: 10000 })
         ])
 
         const listaCriptomoedas = [

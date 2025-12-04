@@ -6,14 +6,14 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class Deposito {
     readonly page: Page
     readonly menuDeposito: Locator
-    readonly programaVip: Locator
-    readonly blackFriday: Locator
+    readonly lblProgramaVip: Locator
+    readonly lblBlackFriday: Locator
 
     constructor(page: Page) {
         this.page = page
         this.menuDeposito = this.page.locator('a#deposit-menu[href="/pt/deposit"]:visible')
-        this.programaVip = this.page.getByText('Vantagens e bônus especiais')
-        this.blackFriday = this.page.getByText('Black Week HomeBroker')
+        this.lblProgramaVip = this.page.getByText('Vantagens e bônus especiais')
+        this.lblBlackFriday = this.page.getByText('Black Week HomeBroker')
     }
 
     async depositoNavigation(creds: CredenciaisLogin) {
@@ -22,10 +22,11 @@ export class Deposito {
 
         await this.page.waitForTimeout(5000)
 
-        if (await this.programaVip.isVisible()) {
+        if (await this.lblProgramaVip.isVisible()) {
             this.page.getByText('Não mostrar novamente').click()
         }
         await this.page.waitForTimeout(5000)
         await this.menuDeposito.click()
+        await this.page.waitForTimeout(5000)
     }
 }

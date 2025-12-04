@@ -6,34 +6,31 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class SaqueKhipuPage {
     readonly page: Page
     readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoedas: Locator
-    readonly valorlimiteDiarioCriptomoedas: Locator
-    readonly valorMinimoCriptomoedas: Locator
-    readonly valorMaximoCriptomoedas: Locator
+    readonly lblTituloCriptomoedas: Locator
+    readonly lblValorMinimoCriptomoedas: Locator
+    readonly lblValorMaximoCriptomoedas: Locator
     readonly imgTransferenciaBancaria: Locator
-    readonly tituloTransferenciaBancaria: Locator
-    readonly valorMinimoTransferenciaBancaria: Locator
-    readonly valorMaximoTransferenciaBancaria: Locator
-    readonly botaoRevisarSaque: Locator
-    readonly botaoCancelar: Locator
-    readonly titleInformeSeusDadosBancarios: Locator
+    readonly lblTituloTransferenciaBancaria: Locator
+    readonly lblValorMinimoTransferenciaBancaria: Locator
+    readonly lblValorMaximoTransferenciaBancaria: Locator
+    readonly btnRevisarSaque: Locator
+    readonly btnCancelar: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela inicial de saque por Crypto ---*/
         this.imgCriptomoedas = page.getByAltText('Crypto Icon')
-        this.tituloCriptomoedas = page.getByText('Crypto').first()
-        this.valorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
-        this.valorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
+        this.lblTituloCriptomoedas = page.getByText('Crypto').first()
+        this.lblValorMinimoCriptomoedas = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*2(?:[.,]00)?/i).first()
+        this.lblValorMaximoCriptomoedas = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
         /*--- Mapeamento da tela inicial de saque por Khipu ---*/
         this.imgTransferenciaBancaria = page.getByAltText('Bank Transfer Icon')
-        this.tituloTransferenciaBancaria = page.getByText('Transferencia bancaria', { exact: true })
-        this.valorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*20(?:[.,]00)?/i).first()
-        this.valorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
+        this.lblTituloTransferenciaBancaria = page.getByText('Transferencia bancaria', { exact: true })
+        this.lblValorMinimoTransferenciaBancaria = page.getByText(/Valor mínimo por saque:\s*(?:R\$|\$)?\s*20(?:[.,]00)?/i).first()
+        this.lblValorMaximoTransferenciaBancaria = page.getByText(/Valor máximo por saque:\s*(?:R\$|\$)?\s*5[\d\.,\s]*000(?:[.,]00)?/i).first()
         /*--- Mapeamento da tela de saque ---*/
-        this.botaoRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
-        this.botaoCancelar = this.page.getByText('Cancelar')
-        this.titleInformeSeusDadosBancarios = this.page.getByText('Informe os seus dados bancários')
+        this.btnRevisarSaque = this.page.getByRole('button', { name: 'Revisar saque' })
+        this.btnCancelar = this.page.getByText('Cancelar')
     }
 
     async abrirSaqueKhipu(creds: CredenciaisLogin) {
@@ -58,13 +55,13 @@ export class SaqueKhipuPage {
         await this.abrirSaqueKhipu(creds)
         await this.assertVisible(
             this.imgCriptomoedas,
-            this.tituloCriptomoedas,
-            this.valorMinimoCriptomoedas,
-            this.valorMaximoCriptomoedas,
+            this.lblTituloCriptomoedas,
+            this.lblValorMinimoCriptomoedas,
+            this.lblValorMaximoCriptomoedas,
             this.imgTransferenciaBancaria,
-            this.tituloTransferenciaBancaria,
-            this.valorMinimoTransferenciaBancaria,
-            this.valorMaximoTransferenciaBancaria
+            this.lblTituloTransferenciaBancaria,
+            this.lblValorMinimoTransferenciaBancaria,
+            this.lblValorMaximoTransferenciaBancaria
         )
 
         const crypto = this.page.getByRole('button', { name: /Crypto/i })
@@ -73,7 +70,7 @@ export class SaqueKhipuPage {
         const transferenciaBancaria = this.page.getByRole('button', { name: /Transferencia bancaria/i })
         await expect(transferenciaBancaria.getByText('Limite diário de saques: 100')).toBeVisible()
 
-        await this.tituloTransferenciaBancaria.click()
+        await this.lblTituloTransferenciaBancaria.click()
 
         await expect(this.page.getByText('O saque será realizado para a pessoa com número de documento', { exact: false }).first()).toBeVisible({ timeout: 10000 })
         await expect(this.page.getByText('que foi validado durante o processo de verificação da conta. Observe que todos os valores estão em dólares americanos (USD).', { exact: false }).first()).toBeVisible({ timeout: 10000 })
@@ -92,9 +89,9 @@ export class SaqueKhipuPage {
         const valorInput = this.page.locator('#outlined-basic').first()
         await expect(valorInput).toBeVisible({ timeout: 5000 })
         await valorInput.fill('10000')
-        await expect(this.botaoCancelar).toBeVisible()
+        await expect(this.btnCancelar).toBeVisible()
 
-        await this.botaoRevisarSaque.click()
+        await this.btnRevisarSaque.click()
 
         await this.assertVisible(
             /* Mapeamento da modal de dados bancários */

@@ -5,15 +5,11 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class ConfiguracoesPage {
     readonly page: Page
-    readonly voltarBotao: Locator
-    readonly preferenciaTexto: Locator
-    readonly desempenho: Locator
+    readonly btnVoltar: Locator
 
     constructor(page: Page) {
         this.page = page
-        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
-        this.preferenciaTexto = this.page.getByText('Preferência').first()
-        this.desempenho = this.page.getByText('Desempenho').first()
+        this.btnVoltar = this.page.getByRole('button', { name: 'voltar' })
     }
 
     async abrirConfiguracoes(creds: CredenciaisLogin) {
@@ -45,7 +41,7 @@ export class ConfiguracoesPage {
             'Configurações',
             'Segurança',
             'Legal',
-            this.voltarBotao
+            this.btnVoltar
         )
 
         const opcoesConfiguracao = [

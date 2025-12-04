@@ -6,9 +6,6 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class TermosCondicoesPage {
     readonly page: Page
     readonly termosCondicoes: Locator
-    readonly titulo: Locator
-    readonly descricao: Locator
-    readonly alert: Locator
 
     constructor(page: Page) {
         this.page = page

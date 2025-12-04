@@ -5,31 +5,28 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class DepositoSpeiPage {
     readonly page: Page
-    readonly titulo: Locator
     readonly imgCriptomoedas: Locator
-    readonly imgOxxo: Locator
     readonly imgSpei: Locator
-    readonly tituloSpei: Locator
-    readonly aplicarBotao: Locator
-    readonly transacaoProtegidaTexto: Locator
-    readonly redirecionamentoTexto: Locator
+    readonly lblTituloSpei: Locator
+    readonly imgOxxo: Locator
+    readonly lblTransacaoProtegida: Locator
+    readonly lblRedirecionamento: Locator
+    readonly btnAplicar: Locator
 
     constructor(page: Page) {
         this.page = page
-        /*--- Mapeamento da tela de "Selecione o tipo de depósito ---*/
-        this.titulo = this.page.getByText('Selecione o tipo de depósito')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Spei" ---*/
         this.imgSpei = this.page.getByAltText('SPEI Icon')
-        this.tituloSpei = this.page.getByText('SPEI').first()
+        this.lblTituloSpei = this.page.getByText('SPEI').first()
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - OXXO" ---*/
         this.imgOxxo = this.page.getByAltText('OXXO Icon')
         /*--- Mapeamento da tela de "Selecione o tipo de depósito" ---*/
-        this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
-        this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
+        this.lblTransacaoProtegida = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
+        this.lblRedirecionamento = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
+        this.btnAplicar = this.page.getByRole('button', { name: 'Aplicar' })
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -65,7 +62,8 @@ export class DepositoSpeiPage {
         await this.abrirDeposito(creds)
 
         await this.assertVisible(
-            this.titulo,
+            /*--- Mapeamento da tela de "Selecione o tipo de depósito ---*/
+            'Selecione o tipo de depósito',
             'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
@@ -81,7 +79,7 @@ export class DepositoSpeiPage {
             'OXXO',
             'Os pagamentos OXXO serão creditados em 1 ou 2 dias úteis',
             'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
         const spei = this.page.getByRole('link', { name: /SPEI/i })
@@ -90,7 +88,7 @@ export class DepositoSpeiPage {
         const oxxo = this.page.getByRole('link', { name: /OXXO/i })
         await expect(oxxo.getByText('Valor mínimo: MX$200.00')).toBeVisible()
 
-        await this.tituloSpei.click()
+        await this.lblTituloSpei.click()
 
         await this.assertVisible(
             /*--- Mapeamento da tela de "Escolha o valor" ---*/
@@ -98,8 +96,8 @@ export class DepositoSpeiPage {
             this.imgSpei,
             'Note que todos os valores estão em peso mexicano',
             '90% dos depósitos por SPEI são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
-            this.transacaoProtegidaTexto,
-            this.redirecionamentoTexto
+            this.lblTransacaoProtegida,
+            this.lblRedirecionamento
         )
 
         await expect(this.page.getByText('Valor mínimo: MX$200', { exact: true })).toBeVisible()
@@ -140,7 +138,7 @@ export class DepositoSpeiPage {
             'Tem um código de cupom? Insira abaixo.',
             'Digite o código do cupom',
             'Código do cupom',
-            this.aplicarBotao
+            this.btnAplicar
         )
 
         expect(this.page.getByRole('button', { name: 'MX$20,000.00' })).toBeVisible()

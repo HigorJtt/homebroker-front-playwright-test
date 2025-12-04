@@ -6,29 +6,27 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 export class DepositoPsePage {
     readonly page: Page
     readonly imgCriptomoedas: Locator
-    readonly tituloCriptomoeda: Locator
     readonly imgPse: Locator
-    readonly tituloPse: Locator
-    readonly transacaoProtegidaTexto: Locator
-    readonly escolhaValorTitulo: Locator
-    readonly placeholderCodigoCupom: Locator
-    readonly aplicarBotao: Locator
-    readonly redirecionamentoTexto: Locator
+    readonly lblTituloPse: Locator
+    readonly lblTransacaoProtegida: Locator
+    readonly lblEscolhaValorTitulo: Locator
+    readonly inpPlaceholderCodigoCupom: Locator
+    readonly btnAplicar: Locator
+    readonly lblRedirecionamento: Locator
 
     constructor(page: Page) {
         this.page = page
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
         this.imgCriptomoedas = this.page.getByAltText('Crypto Icon')
-        this.tituloCriptomoeda = this.page.getByText('Criptomoeda').first()
         /*--- Mapeamento da tela de "Selecione o tipo de depósito - PSE" ---*/
         this.imgPse = this.page.getByAltText('PSE Icon')
-        this.tituloPse = this.page.getByText('PSE').first()
-        this.transacaoProtegidaTexto = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
+        this.lblTituloPse = this.page.getByText('PSE').first()
+        this.lblTransacaoProtegida = this.page.getByText('Transação protegida – você está em um ambiente seguro com criptografia de 256 bits')
         /*--- Mapeamento da tela de "Escolha o valor" ---*/
-        this.escolhaValorTitulo = this.page.getByText('Escolha o valor')
-        this.placeholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
-        this.aplicarBotao = this.page.getByRole('button', { name: 'Aplicar' })
-        this.redirecionamentoTexto = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
+        this.lblEscolhaValorTitulo = this.page.getByText('Escolha o valor')
+        this.inpPlaceholderCodigoCupom = this.page.getByPlaceholder('Digite o código do cupom')
+        this.btnAplicar = this.page.getByRole('button', { name: 'Aplicar' })
+        this.lblRedirecionamento = this.page.getByText('Você será redirecionado para o nosso parceiro de pagamentos para concluir seu depósito.').first()
     }
 
     async abrirDeposito(creds: CredenciaisLogin): Promise<void> {
@@ -70,30 +68,31 @@ export class DepositoPsePage {
             'Nossa plataforma oferece uma conta de trading além da conta de prática. Cada uma opera de forma independente, com saldos e métodos de depósito separados.',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - Criptomoeda" ---*/
             this.imgCriptomoedas,
-            this.tituloCriptomoeda,
+            'Criptomoeda',
             'Valor mínimo: 10 USDT',
             'O tempo de processamento do depósito de criptomoeda pode variar dependendo da blockchain utilizada',
             /*--- Mapeamento da tela de "Selecione o tipo de depósito - PSE" ---*/
             this.imgPse,
-            this.tituloPse,
+            this.lblTituloPse,
             'Valor mínimo: $10.00',
             '90% dos depósitos feitos via PSE são processados em poucos minutos',
             'Importante: A forma de depósito é a mesma para saques. Certifique-se de selecionar a conta que corresponde ao seu método de preferência.',
-            this.transacaoProtegidaTexto
+            this.lblTransacaoProtegida
         )
 
-        await this.tituloPse.click()
+        await this.lblTituloPse.click()
 
-        await expect(this.escolhaValorTitulo).toBeVisible({ timeout: 10000 })
+        await expect(this.lblEscolhaValorTitulo).toBeVisible({ timeout: 10000 })
 
         await this.assertVisible(
             /*--- Mapeamento da tela de "Escolha o valor" ---*/
-            this.escolhaValorTitulo,
+            this.lblEscolhaValorTitulo,
             this.imgPse,
             'Observe que todos os valores estão em dólares americanos (USD).',
             'Valor mínimo: $10',
             '90% dos depósitos por PSE são processados em poucos minutos. Ao continuar, concordo com os Termos e condições.',
-            this.transacaoProtegidaTexto,
+            this.lblTransacaoProtegida,
+            this.lblRedirecionamento
         )
 
         const listaValores = [
@@ -130,9 +129,9 @@ export class DepositoPsePage {
 
         await this.assertNotVisible(
             'Tem um código de cupom? Insira abaixo.',
-            this.placeholderCodigoCupom,
+            this.inpPlaceholderCodigoCupom,
             'Código do cupom',
-            this.aplicarBotao
+            this.btnAplicar
         )
 
         expect(this.page.getByRole('button', { name: '$200', exact: true }))

@@ -5,17 +5,17 @@ import { CredenciaisLogin } from '@/src/interfaces/login.interface'
 
 export class SomPage {
     readonly page: Page
-    readonly voltarBotao: Locator
-    readonly sonsLink: Locator
-    readonly sonsHeading: Locator
+    readonly btnVoltar: Locator
+    readonly lnkSons: Locator
+    readonly lnkSonsHeading: Locator
     readonly alert: Locator
 
     constructor(page: Page) {
         this.page = page
+        this.btnVoltar = this.page.getByRole('button', { name: 'voltar' })
+        this.lnkSons = this.page.getByRole('link', { name: 'Som Sons do sistema' })
+        this.lnkSonsHeading = this.page.getByRole('heading', { name: 'Sons do sistema' })
         this.alert = this.page.getByRole('alert')
-        this.voltarBotao = this.page.getByRole('button', { name: 'voltar' })
-        this.sonsLink = this.page.getByRole('link', { name: 'Som Sons do sistema' })
-        this.sonsHeading = this.page.getByRole('heading', { name: 'Sons do sistema' })
     }
 
     async abrirSom(creds: CredenciaisLogin) {
@@ -38,9 +38,9 @@ export class SomPage {
     async validarSom(creds: CredenciaisLogin) {
         await this.abrirSom(creds)
 
-        await this.assertVisible(this.voltarBotao)
-        await this.sonsLink.click()
-        await expect(this.sonsHeading).toBeVisible()
+        await this.assertVisible(this.btnVoltar)
+        await this.lnkSons.click()
+        await expect(this.lnkSonsHeading).toBeVisible()
         await this.page.getByText('Ativar sons do sistema:').click()
         await expect(this.alert.filter({ hasText: 'Suas preferências de som' })).toBeVisible({ timeout: 10000 })
     }
